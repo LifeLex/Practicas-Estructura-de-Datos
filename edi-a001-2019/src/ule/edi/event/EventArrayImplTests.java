@@ -54,4 +54,9 @@ public class EventArrayImplTests {
 		Assert.assertEquals(ep.sellSeat(1, new Person("1010", "AA", 10), Configuration.Type.SILVER),true);
 		Assert.assertEquals(ep.getAvailableSilverSeatsList().toString(), "[2]");					
 	}
+	
+	@Test
+	public void testgetName() throws Exception{
+	
+	}
 }

@@ -46,15 +46,25 @@ public class EventArrayImpl implements Event {
 public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	   //TODO 
 	   // utiliza los precios por defecto: DEFAULT_PRICE_GOLD y DEFAULT_PRICE_SILVER definidos en Configuration.java
+	   this.name= name;
+	   this.date= date;
 	   
 	   // Debe crear los arrays de butacas gold y silver
-	   
+	   gold= new Seat[nGold];
+	   silver= new Seat[nSilver];
    }
    
    
    public EventArrayImpl(String name, Date date, int nGold, int nSilver, Double priceGold, Double priceSilver){
 	   //TODO 
 	   // Debe crear los arrays de butacas gold y silver
+	   this.name= name;
+	   this.date= date;
+	   this.priceGold= priceGold;
+	   this.priceSilver= priceSilver;
+	   gold= new Seat[nGold];
+	   silver= new Seat[nSilver];
+	   
 	   
 	   
    }
@@ -63,25 +73,48 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public Date getDate() {
 		// TODO Auto-generated method stub
-		return null;
+		return date;
 	}
 
 	
 	@Override
 	public int getNumberOfAttendingChildren() {
 		// TODO Auto-generated method stub
-		return 0;
+		int nChildren= 0;
+		
+		for (int i = 0; i < nGold; i++) {
+			if (gold[i]!=null && gold[i].getHolder().getAge()<=Configuration.CHILDREN_EXMAX_AGE) {
+				nChildren++;
+			}
+		}
+		for (int i = 0; i < nSilver; i++) {
+			if (silver[i]!=null && silver[i].getHolder().getAge()<=Configuration.CHILDREN_EXMAX_AGE) {
+				nChildren++;
+			}
+		}
+		return nChildren;
 	}
 
 	@Override
 	public int getNumberOfAttendingAdults() {
 		// TODO Auto-generated method stub
+		int nAdults=0;
+		for (int i = 0; i < nGold; i++) {
+			if (gold[i]!=null && gold[i].getHolder().getAge()>Configuration.CHILDREN_EXMAX_AGE && gold[i].getHolder().getAge()<Configuration.ELDERLY_PERSON_INMIN_AGE) {
+				nAdults++;
+			}
+		}
+		for (int i = 0; i < nSilver; i++) {
+			if (silver[i]!=null && silver[i].getHolder().getAge()>Configuration.CHILDREN_EXMAX_AGE && silver[i].getHolder().getAge()<Configuration.ELDERLY_PERSON_INMIN_AGE) {
+				nAdults++;
+			}
+		}
 		return 0;
 	}
 
