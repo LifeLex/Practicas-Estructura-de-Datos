@@ -115,13 +115,26 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 				nAdults++;
 			}
 		}
-		return 0;
+		return nAdults;
 	}
 
 	@Override
 	public int getNumberOfAttendingElderlyPeople() {
 		// TODO Auto-generated method stub
-		return 0;
+		int nElder= 0;
+		
+		for (int i = 0; i < nGold; i++) {
+			if (gold[i]!=null && gold[i].getHolder().getAge()<=Configuration.ELDERLY_PERSON_INMIN_AGE) {
+				nElder++;
+			}
+		}
+		for (int i = 0; i < nSilver; i++) {
+			if (silver[i]!=null && silver[i].getHolder().getAge()>Configuration.ELDERLY_PERSON_INMIN_AGE) {
+				nElder++;
+			}
+		}
+		return nElder;
+		
 	}
 
 	@Override
@@ -145,19 +158,19 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public int getNumberOfSeats() {
 		// TODO Auto-generated method stub
-		return 0;
+		return nGold+nSilver;
 	}
 
 	@Override
 	public int getNumberOfGoldSeats() {
 		// TODO Auto-generated method stub
-		return 0;
+		return nGold;
 	}
 
 	@Override
 	public int getNumberOfSilverSeats() {
 		// TODO Auto-generated method stub
-		return 0;
+		return nSilver;
 	}
 
 
@@ -178,6 +191,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public Person refundSeat(int pos, Type type) {
 		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -185,6 +199,24 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public boolean sellSeat(int pos, Person p, Type type) {
 		// TODO Auto-generated method stub
+			if(pos-1>=0) {
+			if (type== Configuration.Type.GOLD) {
+				if(pos-1<nGold) {
+					if (gold[pos-1]==null) {
+						gold[pos-1]= new Seat(null, pos, Configuration.Type.GOLD, p);
+						return true;
+					}
+				}
+			}
+			if (type== Configuration.Type.SILVER) {
+					if(pos-1<nSilver) {
+						if (silver[pos-1]==null) {
+							silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
+							return true;
+						}
+					}
+				}
+			}
 		return false;
 	}
 

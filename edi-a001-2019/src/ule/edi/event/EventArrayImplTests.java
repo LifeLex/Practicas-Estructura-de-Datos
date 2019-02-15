@@ -56,7 +56,25 @@ public class EventArrayImplTests {
 	}
 	
 	@Test
-	public void testgetName() throws Exception{
+	public void testgetNumberOfSeats() throws Exception{
+		Assert.assertEquals(10, e.getNumberOfGoldSeats());
+		Assert.assertEquals(100, e.getNumberOfSilverSeats());
+		Assert.assertEquals(110, e.getNumberOfSeats());
+	}
 	
+	@Test
+	public void testsellSeat() throws Exception{
+		//Podria declarar un objeto person para cada assert dentro de este test
+		Person persona= new Person("Alejandro", "71465351G", 20);
+		Assert.assertEquals(true, e.sellSeat(1, persona, Type.GOLD));
+		Assert.assertEquals(true, e.sellSeat(1, persona, Type.SILVER));
+		//probar una posicion inexistente
+		Assert.assertEquals(false, e.sellSeat(0, persona, Type.GOLD));
+		Assert.assertEquals(false, e.sellSeat(0, persona, Type.SILVER));
+		Assert.assertEquals(false, e.sellSeat(11, persona, Type.GOLD));
+		Assert.assertEquals(false, e.sellSeat(101, persona, Type.SILVER));
+		
+		
+		
 	}
 }
