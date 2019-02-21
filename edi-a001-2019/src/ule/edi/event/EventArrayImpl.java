@@ -89,12 +89,12 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 		int nChildren= 0;
 		
 		for (int i = 0; i < nGold; i++) {
-			if (gold[i]!=null && gold[i].getHolder().getAge()<=Configuration.CHILDREN_EXMAX_AGE) {
+			if (gold[i]!=null && gold[i].getHolder().getAge()<Configuration.CHILDREN_EXMAX_AGE) {
 				nChildren++;
 			}
 		}
 		for (int i = 0; i < nSilver; i++) {
-			if (silver[i]!=null && silver[i].getHolder().getAge()<=Configuration.CHILDREN_EXMAX_AGE) {
+			if (silver[i]!=null && silver[i].getHolder().getAge()<Configuration.CHILDREN_EXMAX_AGE) {
 				nChildren++;
 			}
 		}
@@ -200,10 +200,10 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	public boolean sellSeat(int pos, Person p, Type type) {
 		// TODO Auto-generated method stub
 			if(pos-1>=0) {
-			if (type== Configuration.Type.GOLD) {
+			if (type== Configuration.Type.GOLD && type!= Configuration.Type.SILVER) {
 				if(pos-1<nGold) {
 					if (gold[pos-1]==null) {
-						gold[pos-1]= new Seat(null, pos, Configuration.Type.GOLD, p);
+							gold[pos-1]= new Seat(null, pos, Configuration.Type.GOLD, p);
 						return true;
 					}
 				}
@@ -211,7 +211,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 			if (type== Configuration.Type.SILVER) {
 					if(pos-1<nSilver) {
 						if (silver[pos-1]==null) {
-							silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
+								silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
 							return true;
 						}
 					}
