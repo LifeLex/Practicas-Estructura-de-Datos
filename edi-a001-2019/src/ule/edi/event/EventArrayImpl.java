@@ -193,22 +193,53 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public int getNumberOfAvailableSeats() {
+		int disponiblesG=0;
+		int disponiblesS=0;
 		int disponibles=0;
+		for (int i = 0; i < gold.length; i++) {
+			if (gold[i]==null) {
+				disponiblesG++;
+			}
+		}
+		for (int i = 0; i < silver.length; i++) {
+			if (silver[i]==null) {
+				disponiblesS++;
+			}
+		}
+		disponibles=disponiblesG+disponiblesS;
 		return disponibles;
 	}
 
 
 	@Override
 	public Seat getSeat(int pos, Type type) {
-		// TODO Auto-generated method stub
+		if (type==Type.GOLD) {
+			return gold[pos-1];
+		}
+		if (type==Type.SILVER) {
+			return silver[pos-1];
+		}else {
+		
 		return null;
+		}
 	}
 
 
 	@Override
 	public Person refundSeat(int pos, Type type) {
-		// TODO Auto-generated method stub
-		
+		Person owner;
+		if (type==Type.GOLD) {
+			if (gold[pos-1]!=null) {
+				owner=gold[pos-1].getHolder();
+				gold[pos-1]=null;
+				return owner;
+			}
+		}
+		if (type==Type.SILVER) {
+			owner=silver[pos-1].getHolder();
+			silver[pos-1]=null;
+			return owner;
+		}
 		return null;
 	}
 
