@@ -63,19 +63,18 @@ public class EventArrayImplTests {
 	}
 	
 	@Test
-	public void testsellSeat() throws Exception{
-		//Podria declarar un objeto person para cada assert dentro de este test
+	public void testSellSeat() throws Exception{
 		Person persona1= new Person("12345678A", "Alex", 22);
-		Person persona2= new Person("12345678A", "Alex", 22);
+		Person persona2= new Person("12345678B", "pedro", 23);
 		Assert.assertEquals(true, e.sellSeat(1, persona1, Configuration.Type.GOLD));
-		//Assert.assertEquals(false, e.sellSeat(1, persona2, Configuration.Type.GOLD));
+		Assert.assertEquals(false, e.sellSeat(1, persona2, Configuration.Type.GOLD));
 
-//		Assert.assertEquals(true, e.sellSeat(1, persona, Configuration.Type.SILVER));
+		Assert.assertEquals(true, e.sellSeat(1, persona1, Type.SILVER));
 //		//probar una posicion inexistente
-//		Assert.assertEquals(false, e.sellSeat(0, persona, Configuration.Type.GOLD));
-//		Assert.assertEquals(false, e.sellSeat(0, persona, Configuration.Type.SILVER));
-//		Assert.assertEquals(false, e.sellSeat(11, persona, Configuration.Type.GOLD));
-//		Assert.assertEquals(false, e.sellSeat(101, persona, Configuration.Type.SILVER));
+		Assert.assertEquals(false, e.sellSeat(0, persona1, Configuration.Type.GOLD));
+		Assert.assertEquals(false, e.sellSeat(0, persona1, Configuration.Type.SILVER));
+		Assert.assertEquals(false, e.sellSeat(11, persona1, Configuration.Type.GOLD));
+		Assert.assertEquals(false, e.sellSeat(101, persona1, Configuration.Type.SILVER));
 //		
 		
 		

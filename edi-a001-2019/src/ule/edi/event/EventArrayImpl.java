@@ -48,6 +48,8 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	   // utiliza los precios por defecto: DEFAULT_PRICE_GOLD y DEFAULT_PRICE_SILVER definidos en Configuration.java
 	   this.name= name;
 	   this.date= date;
+	   this.nGold= nGold;
+	   this.nSilver= nSilver;
 	   
 	   // Debe crear los arrays de butacas gold y silver
 	   gold= new Seat[nGold];
@@ -72,20 +74,17 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return name;
+				return name;
 	}
 
 	@Override
 	public Date getDate() {
-		// TODO Auto-generated method stub
 		return date;
 	}
 
 	
 	@Override
 	public int getNumberOfAttendingChildren() {
-		// TODO Auto-generated method stub
 		int nChildren= 0;
 		
 		for (int i = 0; i < nGold; i++) {
@@ -103,7 +102,6 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public int getNumberOfAttendingAdults() {
-		// TODO Auto-generated method stub
 		int nAdults=0;
 		for (int i = 0; i < nGold; i++) {
 			if (gold[i]!=null && gold[i].getHolder().getAge()>Configuration.CHILDREN_EXMAX_AGE && gold[i].getHolder().getAge()<Configuration.ELDERLY_PERSON_INMIN_AGE) {
@@ -120,7 +118,6 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public int getNumberOfAttendingElderlyPeople() {
-		// TODO Auto-generated method stub
 		int nElder= 0;
 		
 		for (int i = 0; i < nGold; i++) {
@@ -139,45 +136,65 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public int getNumberOfSoldSeats() {
-		// TODO Auto-generated method stub
-		return 0;
+		int numeroG=0;
+		int numeroS=0;
+		int numeroTotal=0;
+		for (int i = 0; i < gold.length; i++) {
+			if (gold[i]!= null) {
+				numeroG++;
+			}
+		}
+		for (int i = 0; i < silver.length; i++) {
+			if (silver[i]!= null) {
+				numeroS++;
+			}
+		}
+		numeroTotal= numeroG+numeroS;
+			return numeroTotal;
 	}
 
 	@Override
 	public int getNumberOfSoldGoldSeats() {
-		// TODO Auto-generated method stub
-		return 0;
+		int numeroG=0;
+		for (int i = 0; i < gold.length; i++) {
+			if (gold[i]!= null) {
+				numeroG++;
+			}
+		}
+		return numeroG;
 	}
 
 	@Override
 	public int getNumberOfSoldSilverSeats() {
-		// TODO Auto-generated method stub
-		return 0;
+		int numeroS=0;
+		for (int i = 0; i < silver.length; i++) {
+			if (silver[i]!=null) {
+				numeroS++;
+			}
+		}
+		return numeroS;
 	}
 
 	@Override
 	public int getNumberOfSeats() {
-		// TODO Auto-generated method stub
 		return nGold+nSilver;
 	}
 
 	@Override
 	public int getNumberOfGoldSeats() {
-		// TODO Auto-generated method stub
 		return nGold;
 	}
 
 	@Override
 	public int getNumberOfSilverSeats() {
-		// TODO Auto-generated method stub
 		return nSilver;
 	}
 
 
 	@Override
 	public int getNumberOfAvailableSeats() {
-		// TODO Auto-generated method stub
-		return 0;
+		int disponibles=0;
+		return disponibles;
 	}
 
 
@@ -198,25 +215,35 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public boolean sellSeat(int pos, Person p, Type type) {
-		// TODO Auto-generated method stub
 			if(pos-1>=0) {
-			if (type== Configuration.Type.GOLD && type!= Configuration.Type.SILVER) {
+			if (type == Configuration.Type.GOLD ) {
+//				System.out.println(pos);
+//				System.out.println(nGold);
 				if(pos-1<nGold) {
+//					System.out.println(pos);
 					if (gold[pos-1]==null) {
+						
 							gold[pos-1]= new Seat(null, pos, Configuration.Type.GOLD, p);
 						return true;
 					}
 				}
 			}
-			if (type== Configuration.Type.SILVER) {
-					if(pos-1<nSilver) {
+			
+			if(pos-1<nSilver) {
+				
+				if (type== Configuration.Type.SILVER) {
+					System.out.println(pos);
 						if (silver[pos-1]==null) {
 								silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
 							return true;
-						}
+						
+							}
+						
 					}
 				}
 			}
+		
+		
 		return false;
 	}
 
