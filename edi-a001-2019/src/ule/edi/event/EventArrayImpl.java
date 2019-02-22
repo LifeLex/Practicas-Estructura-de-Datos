@@ -1,5 +1,6 @@
 package ule.edi.event;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -281,21 +282,45 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public List<Integer> getAvailableGoldSeatsList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Integer> disponibles = new ArrayList<Integer>();
+		
+			for (int i = 0; i < gold.length; i++) {
+				if (gold[i+1]==null) {
+					disponibles.add(i+1);
+				}
+				
+			}
+		
+		
+		
+		return disponibles;
 	}
 
 
 	@Override
 	public List<Integer> getAvailableSilverSeatsList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Integer> disponibles = new ArrayList<Integer>();
+		
+		for (int i = 0; i < silver.length; i++) {
+			if (silver[i+1]==null) {
+				disponibles.add(i+1);
+			}
+			
+		}
+	
+	
+	
+	return disponibles;
 	}
 
 
 	@Override
 	public Double getPrice(Seat seat) {
-		// TODO Auto-generated method stub
+		if (seat.getType()==Type.GOLD) {
+			return getPriceGold();
+		}else if(seat.getType()==Type.SILVER){
+			return getPriceSilver();
+		}
 		return null;
 	}
 
