@@ -327,35 +327,61 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public Double getCollectionEvent() {
-		// TODO Auto-generated method stub
-		return null;
+		double precio=0;
+		for (int i = 0; i < gold.length; i++) {
+			if (gold[i]!=null) {
+				precio=precio+Configuration.DEFAULT_PRICE_GOLD;
+			}
+		}
+		for (int i = 0; i < silver.length; i++) {
+			if (silver[i]!=null) {
+				precio=precio+Configuration.DEFAULT_PRICE_SILVER;
+			}
+		}
+		return precio;
 	}
 
 
 	@Override
 	public int getPosPersonGold(Person p) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < gold.length; i++) {
+			if (p.equals(gold[i].getHolder())) {
+				return i;
+			}
+		}
 		return 0;
 	}
 
 
 	@Override
 	public int getPosPersonSilver(Person p) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < silver.length; i++) {
+			if (p.equals(silver[i].getHolder())) {
+				return i;
+			}
+		}
 		return 0;
 	}
 
 
 	@Override
 	public boolean isGold(Person p) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < gold.length; i++) {
+			if (p.equals(gold[i].getHolder())) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 
 	@Override
 	public boolean isSilver(Person p) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < silver.length; i++) {
+			if (p.equals(silver[i].getHolder())) {
+				return true;
+			}
+		}
 		return false;
 	}
 
