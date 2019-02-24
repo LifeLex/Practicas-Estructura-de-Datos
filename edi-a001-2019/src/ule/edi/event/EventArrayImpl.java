@@ -124,7 +124,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 		int nElder= 0;
 		
 		for (int i = 0; i < nGold; i++) {
-			if (gold[i]!=null && gold[i].getHolder().getAge()<=Configuration.ELDERLY_PERSON_INMIN_AGE) {
+			if (gold[i]!=null && gold[i].getHolder().getAge()>Configuration.ELDERLY_PERSON_INMIN_AGE) {
 				nElder++;
 			}
 		}
@@ -217,7 +217,11 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public Seat getSeat(int pos, Type type) {
 		if (type==Type.GOLD) {
+			System.out.println("-----------------------");
+			System.out.println(pos);
+			System.out.println("-----------------------");
 			return gold[pos-1];
+			
 		}
 		if (type==Type.SILVER) {
 			return silver[pos-1];
@@ -287,7 +291,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 		List<Integer> disponibles = new ArrayList<Integer>();
 		
 			for (int i = 0; i < gold.length; i++) {
-				if (gold[i+1]==null) {
+				if (gold[i]==null) {
 					disponibles.add(i+1);
 				}
 				
@@ -304,7 +308,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 		List<Integer> disponibles = new ArrayList<Integer>();
 		
 		for (int i = 0; i < silver.length; i++) {
-			if (silver[i+1]==null) {
+			if (silver[i]==null) {
 				disponibles.add(i+1);
 			}
 			
