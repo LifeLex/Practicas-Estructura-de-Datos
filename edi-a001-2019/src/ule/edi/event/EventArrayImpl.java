@@ -65,6 +65,8 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	   this.date= date;
 	   this.priceGold= priceGold;
 	   this.priceSilver= priceSilver;
+	   this.nGold= nGold;
+	   this.nSilver= nSilver;
 	   gold= new Seat[nGold];
 	   silver= new Seat[nSilver];
 	   

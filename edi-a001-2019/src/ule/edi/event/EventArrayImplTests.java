@@ -1,5 +1,7 @@
 package ule.edi.event;
 
+import static org.junit.Assert.assertEquals;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -79,4 +81,39 @@ public class EventArrayImplTests {
 		
 		
 	}
+	
+	@Test
+	public void testConstructor1() throws Exception{
+		e = new EventArrayImpl("nombre", parseLocalDate("24/02/2018 17:00:00"), 4, 6);
+		Assert.assertEquals("nombre", e.getName());
+		Assert.assertEquals(parseLocalDate("24/02/2018 17:00:00"), e.getDate());
+		Assert.assertEquals(4, e.getNumberOfGoldSeats());
+		Assert.assertEquals(6, e.getNumberOfSilverSeats());
+		
+		Assert.assertNotEquals("aaaaa", e.getName());
+		Assert.assertNotEquals(parseLocalDate("25/03/2019 16:00:00"), e.getDate());
+		Assert.assertNotEquals(5, e.getNumberOfGoldSeats());
+		Assert.assertNotEquals(7, e.getNumberOfSilverSeats());
+		
+	}
+	
+	@Test
+	public void testConstructor2() throws Exception{
+		e = new EventArrayImpl("nombre", parseLocalDate("24/02/2018 17:00:00"), 4, 6, 5.5678, 3.4567);
+		Assert.assertEquals("nombre", e.getName());
+		Assert.assertEquals(parseLocalDate("24/02/2018 17:00:00"), e.getDate());
+		Assert.assertEquals(4, e.getNumberOfGoldSeats());
+		Assert.assertEquals(6, e.getNumberOfSilverSeats());
+		Assert.assertEquals(Double.valueOf(5.5678), e.getPriceGold());
+		Assert.assertEquals(Double.valueOf(3.4567), e.getPriceSilver());
+			
+		Assert.assertNotEquals("aaaaa", e.getName());
+		Assert.assertNotEquals(parseLocalDate("25/03/2019 16:00:00"), e.getDate());
+		Assert.assertNotEquals(5, e.getNumberOfGoldSeats());
+		Assert.assertNotEquals(7, e.getNumberOfSilverSeats());
+		Assert.assertNotEquals(Double.valueOf(7.5678), e.getPriceGold());
+		Assert.assertNotEquals(Double.valueOf(5.4567), e.getPriceSilver());
+	}
+	
+	
 }
