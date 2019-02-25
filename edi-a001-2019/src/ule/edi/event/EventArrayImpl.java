@@ -217,9 +217,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public Seat getSeat(int pos, Type type) {
 		if (type==Type.GOLD) {
-			System.out.println("-----------------------");
-			System.out.println(pos);
-			System.out.println("-----------------------");
+			
 			return gold[pos-1];
 			
 		}
@@ -352,7 +350,8 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	public int getPosPersonGold(Person p) {
 		for (int i = 0; i < gold.length; i++) {
 			if (p.equals(gold[i].getHolder())) {
-				return i;
+				
+				return i+1;
 			}
 		}
 		return 0;
@@ -363,7 +362,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	public int getPosPersonSilver(Person p) {
 		for (int i = 0; i < silver.length; i++) {
 			if (p.equals(silver[i].getHolder())) {
-				return i;
+				return i+1;
 			}
 		}
 		return 0;
