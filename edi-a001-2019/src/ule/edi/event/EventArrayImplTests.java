@@ -139,7 +139,7 @@ public class EventArrayImplTests {
 		Person persona5= new Person("12345678C", "rodrigo", 70);
 		Person persona6= new Person("12345678D", "adolfo", 80);
 		
-		e.sellSeat(1, persona1, Type.GOLD);
+		e.sellSeat(1, persona1, Configuration.Type.GOLD);
 		e.sellSeat(1, persona2, Type.SILVER);
 		e.sellSeat(2, persona3, Type.GOLD);
 		e.sellSeat(2, persona4, Type.SILVER);
@@ -237,6 +237,7 @@ public class EventArrayImplTests {
 		Person persona5= new Person("12345678C", "rodrigo", 70);
 		Person persona6= new Person("12345678D", "adolfo", 80);
 		
+		
 		e.sellSeat(1, persona1, Type.GOLD);
 		e.sellSeat(1, persona2, Type.SILVER);
 		e.sellSeat(2, persona3, Type.GOLD);
@@ -258,12 +259,19 @@ public class EventArrayImplTests {
 		Person persona5= new Person("12345678C", "rodrigo", 70);
 		Person persona6= new Person("12345678D", "adolfo", 80);
 		
+		//Seat seat = new Seat(e, 1, Type.GOLD, persona1);
+		//Seat seat1 = new Seat(e, 1, Type.SILVER, persona2);
+		
 		e.sellSeat(1, persona1, Type.GOLD);
 		e.sellSeat(1, persona2, Type.SILVER);
 		e.sellSeat(2, persona3, Type.GOLD);
 		e.sellSeat(2, persona4, Type.SILVER);
 		e.sellSeat(3, persona5, Type.GOLD);
 		e.sellSeat(3, persona6, Type.SILVER);
+		
+		Assert.assertEquals(1 , e.getSeat(1, Type.GOLD).getPosition());
+		//Assert.assertTrue(e.getSeat(1, Type.GOLD).equals(persona1));
+		Assert.assertEquals(1 , e.getSeat(1, Type.SILVER).getPosition());
 		
 		
 		
@@ -333,11 +341,19 @@ public class EventArrayImplTests {
 	public void testGetPrice() throws Exception{
 		e = new EventArrayImpl("nombre", parseLocalDate("24/02/2018 17:00:00"), 4, 6);
 		Person persona1= new Person("12345678A", "Alex", 22);
+		Person persona2= new Person("12345678A", "Alex", 22);
+		e.setPriceGold(100.00);
+		e.setPriceSilver(50.00);
+		e.sellSeat(1, persona1, Type.GOLD);
+		e.sellSeat(1, persona2, Type.SILVER);
 		Seat seat = new Seat(e, 1, Type.GOLD, persona1);
+		Seat seat1 = new Seat(e, 1, Type.SILVER, persona2);
+		Assert.assertEquals(100.00, e.getPrice(seat).doubleValue(), 0);
+		Assert.assertEquals(50.00, e.getPrice(seat1).doubleValue(),0);
 		
-		Assert.assertEquals(100, e.getPrice(seat).doubleValue(), 0);
 		
-
+		
+		
 		
 	}
 	
@@ -382,13 +398,13 @@ public class EventArrayImplTests {
 		e.sellSeat(2, persona3, Type.GOLD);
 		e.sellSeat(2, persona4, Type.SILVER);
 		e.sellSeat(3, persona5, Type.GOLD);
-		e.sellSeat(3, persona6, Type.SILVER);
+		//e.sellSeat(3, persona6, Type.SILVER);
 		
 		
 		Assert.assertEquals(null,e.getSeat(7, Type.SILVER));
 		Assert.assertEquals(1,e.getPosPersonSilver(persona2));
 		
-		Assert.assertEquals("", e.getPosPersonSilver(persona1));
+		Assert.assertEquals(-1, e.getPosPersonSilver(persona6));
 		
 		
 		
@@ -411,12 +427,16 @@ public class EventArrayImplTests {
 		e.sellSeat(1, persona2, Type.SILVER);
 		e.sellSeat(2, persona3, Type.GOLD);
 		e.sellSeat(2, persona4, Type.SILVER);
-		e.sellSeat(3, persona5, Type.GOLD);
+		//e.sellSeat(3, persona5, Type.GOLD);
 		e.sellSeat(3, persona6, Type.SILVER);
 		
 		
 		Assert.assertEquals(null,e.getSeat(7, Type.GOLD));
 		Assert.assertEquals(1,e.getPosPersonGold(persona1));
+		
+		
+		Assert.assertEquals(-1, e.getPosPersonGold(persona5));
+		
 	}
 	
 	@Test
@@ -441,9 +461,11 @@ public class EventArrayImplTests {
 		Assert.assertTrue(e.isGold(persona5));
 		Assert.assertTrue(e.isSilver(persona6));
 		
+		Assert.assertFalse(e.isSilver(persona5));
+		Assert.assertFalse(e.isGold(persona4));
+		 
 		
-		Assert.assertEquals(false, e.isGold(persona2));
-		Assert.assertEquals(false, e.isSilver(persona3));
+		
 	}
 	
 	

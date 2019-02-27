@@ -8,23 +8,23 @@ import ule.edi.model.Configuration.Type;
 import ule.edi.model.*;
 
 public class EventArrayImpl implements Event {
-	
-	
+
+
 	private String name;
 	private Date date;
-	
+
 	private Double priceGold;    // precio de entradas tipo GOLD
 	private Double priceSilver;  // precio de entradas tipo SILVER
-	
+
 	private int nGold;    // Nº de butacas de tipo GOLD
 	private int nSilver;  // Nº de butacas de tipo SILVER
-	
+
 	private Seat[] gold;
 	private Seat[] silver;
-	
-	
-	
-   public Double getPriceGold() {
+
+
+
+	public Double getPriceGold() {
 		return priceGold;
 	}
 
@@ -44,40 +44,40 @@ public class EventArrayImpl implements Event {
 	}
 
 
-public EventArrayImpl(String name, Date date, int nGold, int nSilver){
-	   //TODO 
-	   // utiliza los precios por defecto: DEFAULT_PRICE_GOLD y DEFAULT_PRICE_SILVER definidos en Configuration.java
-	   this.name= name;
-	   this.date= date;
-	   this.nGold= nGold;
-	   this.nSilver= nSilver;
-	   
-	   // Debe crear los arrays de butacas gold y silver
-	   gold= new Seat[nGold];
-	   silver= new Seat[nSilver];
-   }
-   
-   
-   public EventArrayImpl(String name, Date date, int nGold, int nSilver, Double priceGold, Double priceSilver){
-	   //TODO 
-	   // Debe crear los arrays de butacas gold y silver
-	   this.name= name;
-	   this.date= date;
-	   this.priceGold= priceGold;
-	   this.priceSilver= priceSilver;
-	   this.nGold= nGold;
-	   this.nSilver= nSilver;
-	   gold= new Seat[nGold];
-	   silver= new Seat[nSilver];
-	   
-	   
-	   
-   }
-   
+	public EventArrayImpl(String name, Date date, int nGold, int nSilver){
+		//TODO 
+		// utiliza los precios por defecto: DEFAULT_PRICE_GOLD y DEFAULT_PRICE_SILVER definidos en Configuration.java
+		this.name= name;
+		this.date= date;
+		this.nGold= nGold;
+		this.nSilver= nSilver;
+
+		// Debe crear los arrays de butacas gold y silver
+		gold= new Seat[nGold];
+		silver= new Seat[nSilver];
+	}
+
+
+	public EventArrayImpl(String name, Date date, int nGold, int nSilver, Double priceGold, Double priceSilver){
+		//TODO 
+		// Debe crear los arrays de butacas gold y silver
+		this.name= name;
+		this.date= date;
+		this.priceGold= priceGold;
+		this.priceSilver= priceSilver;
+		this.nGold= nGold;
+		this.nSilver= nSilver;
+		gold= new Seat[nGold];
+		silver= new Seat[nSilver];
+
+
+
+	}
+
 
 	@Override
 	public String getName() {
-				return name;
+		return name;
 	}
 
 	@Override
@@ -85,11 +85,11 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 		return date;
 	}
 
-	
+
 	@Override
 	public int getNumberOfAttendingChildren() {
 		int nChildren= 0;
-		
+
 		for (int i = 0; i < nGold; i++) {
 			if (gold[i]!=null && gold[i].getHolder().getAge()<Configuration.CHILDREN_EXMAX_AGE) {
 				nChildren++;
@@ -122,7 +122,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public int getNumberOfAttendingElderlyPeople() {
 		int nElder= 0;
-		
+
 		for (int i = 0; i < nGold; i++) {
 			if (gold[i]!=null && gold[i].getHolder().getAge()>Configuration.ELDERLY_PERSON_INMIN_AGE) {
 				nElder++;
@@ -134,7 +134,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 			}
 		}
 		return nElder;
-		
+
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 			}
 		}
 		numeroTotal= numeroG+numeroS;
-			return numeroTotal;
+		return numeroTotal;
 	}
 
 	@Override
@@ -217,16 +217,27 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public Seat getSeat(int pos, Type type) {
 		if (type==Type.GOLD) {
-			
-			return gold[pos-1];
-			
+			if (pos>0 && pos<nGold) {
+				if (gold[pos-1]!=null) {
+					return gold[pos-1];
+				}
+			}
+
+
+
 		}
 		if (type==Type.SILVER) {
-			return silver[pos-1];
-		}else {
-		
-		return null;
+			if (pos>0 && pos<nSilver ) {
+				if (silver[pos-1]!= null) {
+					return silver[pos-1];
+				}
+			}
+
+
 		}
+
+		return null;
+
 	}
 
 
@@ -251,35 +262,35 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 
 	@Override
 	public boolean sellSeat(int pos, Person p, Type type) {
-			if(pos-1>=0) {
+		if(pos-1>=0) {
 			if (type == Configuration.Type.GOLD ) {
-//				System.out.println(pos);
-//				System.out.println(nGold);
+				//				System.out.println(pos);
+				//				System.out.println(nGold);
 				if(pos-1<nGold) {
-//					System.out.println(pos);
+					//					System.out.println(pos);
 					if (gold[pos-1]==null) {
-						
-							gold[pos-1]= new Seat(null, pos, Configuration.Type.GOLD, p);
+
+						gold[pos-1]= new Seat(null, pos, Configuration.Type.GOLD, p);
 						return true;
 					}
 				}
 			}
-			
+
 			if(pos-1<nSilver) {
-				
+
 				if (type== Configuration.Type.SILVER) {
-					System.out.println(pos);
-						if (silver[pos-1]==null) {
-								silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
-							return true;
-						
-							}
-						
+					
+					if (silver[pos-1]==null) {
+						silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
+						return true;
+
 					}
+
 				}
 			}
-		
-		
+		}
+
+
 		return false;
 	}
 
@@ -287,16 +298,16 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public List<Integer> getAvailableGoldSeatsList() {
 		List<Integer> disponibles = new ArrayList<Integer>();
-		
-			for (int i = 0; i < gold.length; i++) {
-				if (gold[i]==null) {
-					disponibles.add(i+1);
-				}
-				
+
+		for (int i = 0; i < gold.length; i++) {
+			if (gold[i]==null) {
+				disponibles.add(i+1);
 			}
-		
-		
-		
+
+		}
+
+
+
 		return disponibles;
 	}
 
@@ -304,28 +315,35 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public List<Integer> getAvailableSilverSeatsList() {
 		List<Integer> disponibles = new ArrayList<Integer>();
-		
+
 		for (int i = 0; i < silver.length; i++) {
 			if (silver[i]==null) {
 				disponibles.add(i+1);
 			}
-			
+
 		}
-	
-	
-	
-	return disponibles;
+
+
+
+		return disponibles;
 	}
 
 
 	@Override
 	public Double getPrice(Seat seat) {
+		double price=0.00;
 		if (seat.getType()==Type.GOLD) {
-			return getPriceGold();
+			price= priceGold;
+
+
+
 		}else if(seat.getType()==Type.SILVER){
-			return getPriceSilver();
+			price= priceSilver;
+
+
+
 		}
-		return null;
+		return price;
 	}
 
 
@@ -349,32 +367,41 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public int getPosPersonGold(Person p) {
 		for (int i = 0; i < gold.length; i++) {
-			if (p.equals(gold[i].getHolder())) {
-				
-				return i+1;
+			if (gold[i]!= null) {
+				if (p.equals(gold[i].getHolder())) {
+
+					return i+1;
+				}
 			}
+
 		}
-		return 0;
+		return -1;
 	}
 
 
 	@Override
 	public int getPosPersonSilver(Person p) {
 		for (int i = 0; i < silver.length; i++) {
-			if (p.equals(silver[i].getHolder())) {
-				return i+1;
+			if (silver[i]!=null) {
+				if (p.equals(silver[i].getHolder())) {
+					return i+1;
+				}
 			}
+
 		}
-		return 0;
+		return -1;
 	}
 
 
 	@Override
 	public boolean isGold(Person p) {
 		for (int i = 0; i < gold.length; i++) {
-			if (p.equals(gold[i].getHolder())) {
-				return true;
+			if (gold[i]!=null) {
+				if (p.equals(gold[i].getHolder())) {
+					return true;
+				}
 			}
+
 		}
 		return false;
 	}
@@ -383,14 +410,17 @@ public EventArrayImpl(String name, Date date, int nGold, int nSilver){
 	@Override
 	public boolean isSilver(Person p) {
 		for (int i = 0; i < silver.length; i++) {
-			if (p.equals(silver[i].getHolder())) {
-				return true;
+			if (silver[i]!=null) {
+				if (p.equals(silver[i].getHolder())) {
+					return true;
+				}
 			}
+
 		}
 		return false;
 	}
 
-	
 
-	
+
+
 }
