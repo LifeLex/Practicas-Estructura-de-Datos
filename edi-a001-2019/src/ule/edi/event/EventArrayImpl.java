@@ -252,9 +252,12 @@ public class EventArrayImpl implements Event {
 			}
 		}
 		if (type==Type.SILVER) {
-			owner=silver[pos-1].getHolder();
-			silver[pos-1]=null;
-			return owner;
+			if (silver[pos-1]!=null) {
+				owner=silver[pos-1].getHolder();
+				silver[pos-1]=null;
+				return owner;
+			}
+
 		}
 		return null;
 	}
@@ -279,7 +282,7 @@ public class EventArrayImpl implements Event {
 			if(pos-1<nSilver) {
 
 				if (type== Configuration.Type.SILVER) {
-					
+
 					if (silver[pos-1]==null) {
 						silver[pos-1]= new Seat(null, pos, Configuration.Type.SILVER, p);
 						return true;
