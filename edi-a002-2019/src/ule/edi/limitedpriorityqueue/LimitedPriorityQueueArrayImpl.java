@@ -6,50 +6,59 @@ import java.util.PriorityQueue;
 
 
 public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T> {
-	    private int capacity;
-	    private int npriorities;
-	    private int count;
+	private int capacity;
+	private int npriorities;
+	private int count;
 
-	    private ArrayList<LinkedQueue<T>> colas;
-	
-	
+	private ArrayList<LinkedQueue<T>> colas;
+
+
 
 	public LimitedPriorityQueueArrayImpl(int capacity, int npriorities) {
+
+		//TODO  asignar los valores de los atributos
+		// Crear el arrayList, y añadir una cola por cada una de las prioridades (1..npriorities)
+		// Si capacidad <=0 disparar la excepción: IllegalArgumentException
+		this.capacity= capacity;
+		this.npriorities= npriorities;
 		
-      //TODO  asignar los valores de los atributos
-	  // Crear el arrayList, y añadir una cola por cada una de las prioridades (1..npriorities)
-	  // Si capacidad <=0 disparar la excepción: IllegalArgumentException
-	
+		ArrayList<LinkedQueue<T>> lista = new ArrayList<LinkedQueue<T>>();
+		for (int i = 0; i < npriorities; i++) {
+			 	lista.add(new LinkedQueue<T>());
+		}
 		
-		
+		if (capacity<=0) {
+			throw new IllegalArgumentException("La capacidad tiene que ser mayor que 0");
+		}
+
 	}
-	
 
 
 
-    @Override
-    public int getCapacity() {
+
+	@Override
+	public int getCapacity() {
 		return capacity;
-    	
-    }
 
-    @Override
-    public int getSize() {
-    	return count;
-    }
+	}
 
-    @Override
-    public boolean isFull() {
-    	// TODO Auto-generated method stub
-        return false;
-    }
+	@Override
+	public int getSize() {
+		return count;
+	}
+
+	@Override
+	public boolean isFull() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public T enqueue(int p, T element) {
 		// TODO Auto-generated method stub
-		
+
 		return null;
-  
+
 	}
 
 
@@ -57,7 +66,7 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 	public T first() throws EmptyCollectionException {
 		// TODO Auto-generated method stub
 		return null;
-      
+
 	}
 
 
@@ -73,7 +82,7 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 		return count==0; 
 	}
 
-	
+
 	@Override
 	public String toString() {
 		if (! this.isEmpty()) {
@@ -93,5 +102,5 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 	}
 
 };
-  
+
 
