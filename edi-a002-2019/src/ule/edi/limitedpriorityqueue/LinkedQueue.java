@@ -23,6 +23,8 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	public LinkedQueue()
 	 {
 		// TODO Auto-generated method stub
+		count = 0;
+		;
 	 } 
 	
 	@Override
