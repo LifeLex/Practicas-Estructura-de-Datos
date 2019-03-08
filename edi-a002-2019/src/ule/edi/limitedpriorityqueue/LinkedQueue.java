@@ -23,13 +23,26 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	public LinkedQueue()
 	 {
 		// TODO Auto-generated method stub
+		
 		count = 0;
-		;
+		front = null;
+		rear= null;
+		
 	 } 
 	
 	@Override
 	public void enqueue(T element) {
 		// TODO Auto-generated method stub
+		Node<T> nodo = new Node<T>(element);
+		if (isEmpty()) {
+			front = rear= nodo;
+		}else {
+			
+			rear.next= nodo;
+			rear = nodo;
+		}
+		count ++;
+		
 	 
 
 	}
@@ -38,7 +51,18 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	public T dequeue() throws EmptyCollectionException
 	   {
 		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			throw new EmptyCollectionException("La cola esta vacia");
+		}
+		Node<T> nodo = front;
+		front = front.next;
+		count --;
+		if (isEmpty()) {
+			rear = null;
+		}
+		
+		
+		return nodo.element;
 
 	   }
 
