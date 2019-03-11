@@ -107,8 +107,10 @@ public class LinkedQueue<T> implements QueueADT<T> {
 		while (nodo!= null) {
 			auxiliar= nodo;
 			nodo= nodo.next;
+			
 		}
 		auxiliar.next=null;
+		count--;
 		return nodo.element;
 	}
 
