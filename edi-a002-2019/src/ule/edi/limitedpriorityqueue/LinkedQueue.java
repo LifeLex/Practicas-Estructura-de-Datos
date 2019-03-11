@@ -22,7 +22,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	
 	public LinkedQueue()
 	 {
-		// TODO Auto-generated method stub
+		
 		
 		count = 0;
 		front = null;
@@ -32,7 +32,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	
 	@Override
 	public void enqueue(T element) {
-		// TODO Auto-generated method stub
+		
 		Node<T> nodo = new Node<T>(element);
 		if (isEmpty()) {
 			front = rear= nodo;
@@ -50,7 +50,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	@Override
 	public T dequeue() throws EmptyCollectionException
 	   {
-		// TODO Auto-generated method stub
+		
 		if (isEmpty()) {
 			throw new EmptyCollectionException("La cola esta vacia");
 		}
@@ -68,28 +68,48 @@ public class LinkedQueue<T> implements QueueADT<T> {
 
 	@Override
 	public T first()  throws EmptyCollectionException{
-		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			throw new EmptyCollectionException("La cola esta vacia");
+		}
+		return front.element;
 	
 		
 	}
 
 	@Override
 	public boolean isEmpty() {
-		 // TODO Auto-generated method stub
+		if (count == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
+		
 		return count;
 	}
 
 	@Override
 	public T dequeueLast() throws EmptyCollectionException {
-	  // TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			throw new EmptyCollectionException("La cola esta vacia");
+		}
+		Node<T> nodo = front;
+		
+		if (nodo.next==null) {
+			front = null;
+			rear= null;
+			count --;
+		}
+		
+		Node<T> auxiliar = null;
+		while (nodo!= null) {
+			auxiliar= nodo;
+			nodo= nodo.next;
+		}
+		auxiliar.next=null;
+		return nodo.element;
 	}
 
 	@Override
