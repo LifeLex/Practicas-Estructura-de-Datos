@@ -101,6 +101,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
 			front = null;
 			rear= null;
 			count --;
+			return nodo.element;
 		}
 		
 		Node<T> auxiliar = null;
@@ -111,6 +112,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
 		}
 		auxiliar.next=null;
 		count--;
+		
 		return nodo.element;
 	}
 
