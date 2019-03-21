@@ -22,12 +22,12 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 		this.capacity= capacity;
 		this.npriorities= npriorities;
 		
-		//ArrayList<LinkedQueue<T>> lista = new ArrayList<LinkedQueue<T>>();
+		
 		colas = new ArrayList<LinkedQueue<T>>();
 		for (int i = 0; i < npriorities; i++) {
-			//Aqui habria que meterlos en colas ??
+			
 			colas.add(new LinkedQueue<T>());
-			 	//lista.add(new LinkedQueue<T>());
+			 	
 		}
 		
 		if (capacity<=0) {
@@ -60,7 +60,12 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T enqueue(int p, T element) {
-		
+		if (colas.size()==capacity) {
+			colas.remove(p);
+			colas.add((LinkedQueue<T>) element);
+			 return element;
+		}
+		colas.add((LinkedQueue<T>) element);
 		return null;
 
 	}
