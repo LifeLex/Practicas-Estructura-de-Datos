@@ -21,15 +21,15 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 		// Si capacidad <=0 disparar la excepción: IllegalArgumentException
 		this.capacity= capacity;
 		this.npriorities= npriorities;
-		
-		
+
+
 		colas = new ArrayList<LinkedQueue<T>>();
 		for (int i = 0; i < npriorities; i++) {
-			
+
 			colas.add(new LinkedQueue<T>());
-			 	
+
 		}
-		
+
 		if (capacity<=0) {
 			throw new IllegalArgumentException("La capacidad tiene que ser mayor que 0");
 		}
@@ -60,12 +60,33 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T enqueue(int p, T element) {
-		if (colas.size()==capacity) {
-			colas.remove(p);
-			colas.add((LinkedQueue<T>) element);
-			 return element ;
+		//probar con i-1
+		if (isFull()) {
+			colas.get(p).enqueue(element);
+			for (int i = npriorities; i >0; i--) {
+				if (colas.get(i)!=null) {
+					if (colas.get(i).size()==1) {
+						try {
+							return  colas.get(i).dequeue();
+						} catch (EmptyCollectionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}else {
+						try {
+							return colas.get(i).dequeueLast();
+						} catch (EmptyCollectionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				}
+
+			}
+
 		}
-		colas.add((LinkedQueue<T>) element);
+
 		return null;
 
 	}
@@ -76,7 +97,7 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 		if (colas.isEmpty()) {
 			throw  new EmptyCollectionException("La cola esta vacia");
 		}
-		
+
 		return colas.get(1).first();
 
 	}
@@ -85,8 +106,10 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T dequeue() throws EmptyCollectionException {
-		// TODO Auto-generated method stub
-		return null;
+		if (colas.isEmpty()) {
+			throw new EmptyCollectionException("La cola esta vacia");
+		}
+		return colas.remove(1).dequeue();
 	}
 
 	@Override

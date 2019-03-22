@@ -29,7 +29,7 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	
 	public LimitedPriorityQueueLinkedImpl(int capacity) {
-		
+		this.capacity= capacity;
    
 	}
 	
