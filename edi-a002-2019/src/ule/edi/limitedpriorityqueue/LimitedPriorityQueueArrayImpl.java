@@ -63,7 +63,7 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 		if (colas.size()==capacity) {
 			colas.remove(p);
 			colas.add((LinkedQueue<T>) element);
-			 return element;
+			 return element ;
 		}
 		colas.add((LinkedQueue<T>) element);
 		return null;
@@ -73,8 +73,11 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T first() throws EmptyCollectionException {
-		// TODO Auto-generated method stub
-		return null;
+		if (colas.isEmpty()) {
+			throw  new EmptyCollectionException("La cola esta vacia");
+		}
+		
+		return colas.get(1).first();
 
 	}
 
