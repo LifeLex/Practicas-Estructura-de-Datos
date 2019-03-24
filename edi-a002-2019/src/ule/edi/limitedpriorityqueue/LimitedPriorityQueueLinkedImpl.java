@@ -5,76 +5,101 @@ import java.util.PriorityQueue;
 
 
 public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T> {
-	    private int capacity;
+	private int capacity;
 
-	    private QueueNode<T> first;
-	    private int count;
-	
+	private QueueNode<T> first;
+	private int count;
+
 
 	private static class QueueNode<E> {
-	
+
 		public QueueNode(int priority, E content) {
 			this.priority = priority;
 			this.content = content;
 			this.next = null;
 		}
-		
+
 		public int priority;
-		
+
 		public E content;
-		
+
 		public QueueNode<E> next;
 	};
-	
 
-	
+
+
 	public LimitedPriorityQueueLinkedImpl(int capacity) {
 		this.capacity= capacity;
-   
+
 	}
-	
-  
 
-  
-    @Override
-    public int getCapacity() {
 
-        return capacity;
-    }
 
-    @Override
-    public int getSize() {
-        return count ;
-    }
 
-    @Override
-    public boolean isFull() {
-    	// TODO Auto-generated method stub
-    	return false;
-    	
-    }
+	@Override
+	public int getCapacity() {
+
+		return capacity;
+	}
+
+	@Override
+	public int getSize() {
+		return count ;
+	}
+
+	@Override
+	public boolean isFull() {
+		if (capacity==count) {
+			return true;
+		}
+		return false;
+
+	}
 
 	@Override
 	public T enqueue(int p, T element) {
-	   // TODO Auto-generated method stub
+		QueueNode<T> current = first;
+		QueueNode<T> previous = null;
+		QueueNode<T> newNode = new QueueNode<T>(p, element);
+		newNode.priority = p;
+		if (isFull()) {
+			for (int i = 0; i < getSize(); i++) {
+				if (newNode.priority>current.priority) {
+					previous= newNode;
+					current = previous.next;
+				}else {
+					current = current.next;
+				}
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public T first() throws EmptyCollectionException {
-		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			throw new EmptyCollectionException("Vacio");
+		}
+		
+		return first.content;
 	}
 
 	@Override
 	public T dequeue() throws EmptyCollectionException {
-		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			throw new EmptyCollectionException("Vacio");
+		}
+		T itemAux = first.content;
+		first = first.next;
+		count--;
+		return itemAux;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if (count==0 && first== null) {
+			return true;
+		}
 		return false;
 	}
 
@@ -83,8 +108,8 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 		if (! this.isEmpty()) {
 			StringBuffer rx = new StringBuffer();
 			rx.append("[");
-		      // TODO : MOSTRAR LOS ELEMENTOS DE LA COLA DE PRIORIDAD CON EL MISMO FORMATO QUE LA OTRA IMPLEMENTACIÓN
-		
+			// TODO : MOSTRAR LOS ELEMENTOS DE LA COLA DE PRIORIDAD CON EL MISMO FORMATO QUE LA OTRA IMPLEMENTACIÓN
+
 			rx.append("]");
 			return rx.toString();
 		} else {
@@ -93,5 +118,5 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 	}
 
 
-  
+
 }
