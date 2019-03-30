@@ -44,15 +44,21 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	@Override
 	public int getSize() {
+		QueueNode<T> actual = first;
+		while (actual!= null) {
+			count++;
+			actual= actual.next;
+			
+		}
 		return count ;
 	}
 
 	@Override
 	public boolean isFull() {
-		if (capacity==count) {
-			return true;
+		if (getSize()<getCapacity()) {
+			return false;
 		}
-		return false;
+		return true;
 
 	}
 
