@@ -16,17 +16,13 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	public LimitedPriorityQueueArrayImpl(int capacity, int npriorities) {
 
-		//TODO  asignar los valores de los atributos
-		// Crear el arrayList, y añadir una cola por cada una de las prioridades (1..npriorities)
-		// Si capacidad <=0 disparar la excepción: IllegalArgumentException
+		
 		this.capacity= capacity;
 		this.npriorities= npriorities;
 
-
-		colas = new ArrayList<LinkedQueue<T>>();
 		for (int i = 0; i < npriorities; i++) {
-
-			colas.add(new LinkedQueue<T>());
+			LinkedQueue<T> queue = new LinkedQueue<T>();
+			colas.add(queue);
 
 		}
 
@@ -47,12 +43,15 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public int getSize() {
+		for (int i = 0; i < colas.size(); i++) {
+			count = count+colas.get(i).size();
+		}
 		return count;
 	}
 
 	@Override
 	public boolean isFull() {
-		if (getSize()==capacity) {
+		if (capacity==getSize()) {
 			return true;
 		}
 		return false;
@@ -60,7 +59,7 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T enqueue(int p, T element) {
-		//probar con i-1
+		
 		if (isFull()) {
 			colas.get(p).enqueue(element);
 			for (int i = npriorities; i >0; i--) {
@@ -94,27 +93,43 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T first() throws EmptyCollectionException {
-		if (colas.isEmpty()) {
+		if (isEmpty()) {
 			throw  new EmptyCollectionException("La cola esta vacia");
 		}
-
-		return colas.get(1).first();
-
+		for (int i = 0; i < npriorities; i++) {
+			if (!colas.get(i).isEmpty()) {
+				return colas.get(i).first();
+			}
+		}
+		
+		return null;
 	}
 
 
 
 	@Override
 	public T dequeue() throws EmptyCollectionException {
-		if (colas.isEmpty()) {
+		if (isEmpty()) {
 			throw new EmptyCollectionException("La cola esta vacia");
 		}
-		return colas.remove(1).dequeue();
+		T elemento = null;
+		for (int i = 0; i <npriorities; i++) {
+			if (!colas.get(i).isEmpty()) {
+				elemento = colas.get(i).first();
+				colas.get(i).dequeue();
+				return elemento;
+			}
+		}
+		return elemento;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return count==0; 
+		if (getSize()==0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 
