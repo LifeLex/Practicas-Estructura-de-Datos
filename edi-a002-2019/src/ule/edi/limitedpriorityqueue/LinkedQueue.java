@@ -22,7 +22,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
 
 	public LinkedQueue()
 	{
-
+		
 
 	} 
 
@@ -34,11 +34,13 @@ public class LinkedQueue<T> implements QueueADT<T> {
 		if (actual==null) {
 			front = nodo;
 			nodo.next=rear;
+			//return ;
 		}
 		while (actual!= rear){
 			if (actual.next==rear) {
 				nodo.next = rear;
 				actual.next = nodo;
+				//return ;
 			}
 			actual = actual.next;
 		}
@@ -84,9 +86,10 @@ public class LinkedQueue<T> implements QueueADT<T> {
 
 	@Override
 	public int size() {
+		count =0;
 		Node<T> actual = front;
 		while(actual != rear) {
-			count= count +1;
+			count= count++;
 			actual = actual.next;
 		}
 		return count;
@@ -99,13 +102,13 @@ public class LinkedQueue<T> implements QueueADT<T> {
 		}
 		Node<T> actual = front;
 		Node<T> nodo;//Nodo auxiliar para devolver los borrados
-		
+
 		//Para un solo elemento
 		if (actual.next==null) {
 			nodo=front;
 			front = null;
 			rear= null;
-			
+
 			return nodo.element;
 		}
 		//Mas de un elemento en la lista
@@ -116,12 +119,12 @@ public class LinkedQueue<T> implements QueueADT<T> {
 				return nodo.element;
 			}
 			actual = actual.next;
-		
+
 		}
-		
-		
+
+
 		return null;
-		
+
 	}
 
 	@Override

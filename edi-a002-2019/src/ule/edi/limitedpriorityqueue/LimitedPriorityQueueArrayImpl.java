@@ -44,6 +44,7 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public int getSize() {
+		count=0;
 		for (int i = 0; i < colas.size(); i++) {
 			count = count+colas.get(i).size();
 		}
@@ -52,7 +53,9 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public boolean isFull() {
-		if (capacity==getSize()) {
+		
+		if (capacity == getSize() ) {
+			
 			return true;
 		}
 		return false;
