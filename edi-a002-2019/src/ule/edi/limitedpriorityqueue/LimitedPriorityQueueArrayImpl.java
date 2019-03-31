@@ -59,34 +59,44 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 	@Override
 	public T enqueue(int p, T element) {
+		int prioridadMinima=0;
+		int pr=1;
+		T elemento =null;
 		
-		if (isFull()) {
-			colas.get(p).enqueue(element);
-			for (int i = npriorities; i >0; i--) {
-				if (colas.get(i)!=null) {
-					if (colas.get(i).size()==1) {
-						try {
-							return  colas.get(i).dequeue();
-						} catch (EmptyCollectionException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}else {
-						try {
-							return colas.get(i).dequeueLast();
-						} catch (EmptyCollectionException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+		for(int i = 0; i < npriorities; i++) {
+			if(!colas.get(i).isEmpty())
+				prioridadMinima = i+1;
+		}
+		
+		for(int i = 0; i < npriorities; i++) {
+			if(pr == p) {
+				if(capacity > this.getSize()) {
+					colas.get(i).enqueue(element);
+					return null;
+				}else {
+					for(int j = npriorities-1; j >= 0 ; j--) {
+						if(!colas.get(j).isEmpty()) {
+							try {
+								if(prioridadMinima <= p) {
+									return element;
+								}else {
+									elemento = colas.get(j).dequeueLast();
+									enqueue(p, element);
+									return elemento;
+								}
+							
+							} catch (EmptyCollectionException e) { 
+								e.printStackTrace();
+							}
 						}
 					}
-
 				}
-
 			}
-
+			pr++;
 		}
-
-		return null;
+		return element;
+		
+		
 
 	}
 

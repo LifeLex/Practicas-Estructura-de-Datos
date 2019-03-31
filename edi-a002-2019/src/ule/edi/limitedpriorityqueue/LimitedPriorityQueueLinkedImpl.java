@@ -64,26 +64,76 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	@Override
 	public T enqueue(int p, T element) {
-		QueueNode<T> current = first;
-		QueueNode<T> previous = null;
-		QueueNode<T> newNode = new QueueNode<T>(p, element);
-		newNode.priority = p;
-		if (isFull()) {
-			for (int i = 0; i < getSize(); i++) {
-				if (newNode.priority>current.priority) {
-					previous= newNode;
-					current = previous.next;
-				}else {
-					current = current.next;
+		QueueNode<T> actual = first;
+		QueueNode<T> nodo = null;//nodo auxiliar
+		QueueNode<T> newNodo = new QueueNode<T>(p, element);
+		
+		
+		//Recorro y obtengo la prioridad minima
+		QueueNode<T> nodoParaPrioridadMinima = first;
+		int prioridadMinima = 0;
+		while (nodoParaPrioridadMinima!=null) {
+			if (nodoParaPrioridadMinima.next==null) {
+				prioridadMinima= nodoParaPrioridadMinima.priority;
+			}
+			nodoParaPrioridadMinima= nodoParaPrioridadMinima.next;
+		}
+		
+		//Cola llena
+		if (!isFull()) {
+			
+			
+			if (isEmpty()) {
+				first= newNodo;
+				newNodo.next= null;
+				return null;
+			}
+			
+			
+			if (p<actual.priority) {
+				newNodo.next=first;
+				first= newNodo;
+				return null;
+			}
+			
+			while (actual !=null) {
+				if (p>= actual.priority && actual.next==null) {
+					actual.next= newNodo;
+					newNodo= null;
+					return null;
 				}
+				
+				if (p>= actual.priority && p<actual.next.priority) {
+					newNodo.next= actual.next;
+					actual.next= newNodo;
+					return null;
+				}
+				actual= actual.next;
 			}
 		}
-		return null;
+		
+		//Lista llena y menos prioridad que el ultimo	
+		if (prioridadMinima <= p) {
+			return element;
+		}
+		
+		//Lista llena y mas prioridad que el ultimo
+		actual = first;
+		while (actual!=null) {
+			if (actual.next.next == null) {
+				nodo= actual.next;
+				actual.next =null;
+			}
+			actual = actual.next;
+		}
+		enqueue(p, element);
+		return nodo.content;
+
 	}
 
 	@Override
 	public T first() throws EmptyCollectionException {
-		if (isEmpty()) {
+		if (first==null) {
 			throw new EmptyCollectionException("Vacio");
 		}
 		
@@ -92,18 +142,19 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	@Override
 	public T dequeue() throws EmptyCollectionException {
-		if (isEmpty()) {
+		if (first==null) {
 			throw new EmptyCollectionException("Vacio");
 		}
-		T itemAux = first.content;
-		first = first.next;
-		count--;
-		return itemAux;
+		QueueNode<T> actual= first;
+		QueueNode<T> nodo;
+		nodo= actual;
+		first= null;
+		return nodo.content;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		if (count==0 && first== null) {
+		if ( first== null) {
 			return true;
 		}
 		return false;
@@ -111,11 +162,26 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	@Override
 	public String toString() {
+		QueueNode<T> actual= first;
+		boolean condicion = true;
 		if (! this.isEmpty()) {
 			StringBuffer rx = new StringBuffer();
 			rx.append("[");
 			// TODO : MOSTRAR LOS ELEMENTOS DE LA COLA DE PRIORIDAD CON EL MISMO FORMATO QUE LA OTRA IMPLEMENTACIÓN
-
+			while (actual!= null) {
+				if (condicion=true) {
+					rx.append("( Priority:"+(actual.priority)+" (");
+					condicion= false;
+				}
+				rx.append(actual.content+", ");
+				if (actual.next == null || actual.priority != actual.next.priority) {
+					rx.delete(rx.length() - 2 , rx.length());
+					condicion = true;
+					rx.append(")), ");
+				}
+				actual= actual.next;
+			}
+			rx.delete(rx.length()-2 , rx.length());
 			rx.append("]");
 			return rx.toString();
 		} else {
