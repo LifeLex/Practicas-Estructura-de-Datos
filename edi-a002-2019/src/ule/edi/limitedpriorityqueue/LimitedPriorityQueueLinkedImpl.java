@@ -44,13 +44,15 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	@Override
 	public int getSize() {
+		//Haciendolo con count da un error 
+		int size=0;
 		QueueNode<T> actual = first;
 		while (actual!= null) {
-			count++;
+			size++;
 			actual= actual.next;
 			
 		}
-		return count ;
+		return size ;
 	}
 
 	@Override
@@ -64,14 +66,23 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 
 	@Override
 	public T enqueue(int p, T element) {
+		
 		QueueNode<T> actual = first;
 		QueueNode<T> nodo = null;//nodo auxiliar
 		QueueNode<T> newNodo = new QueueNode<T>(p, element);
-		
-		
-		//Recorro y obtengo la prioridad minima
 		QueueNode<T> nodoParaPrioridadMinima = first;
 		int prioridadMinima = 0;
+		
+		//Excepciones añadidas para casos especificos
+		if (p<=0) {
+			throw new IllegalArgumentException("");
+		}
+		if (element == null) {
+			throw new NullPointerException("");
+		}
+		
+		//Recorro y obtengo la prioridad minima
+		
 		while (nodoParaPrioridadMinima!=null) {
 			if (nodoParaPrioridadMinima.next==null) {
 				prioridadMinima= nodoParaPrioridadMinima.priority;
@@ -128,7 +139,7 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 		}
 		enqueue(p, element);
 		return nodo.content;
-
+		
 	}
 
 	@Override
@@ -169,7 +180,7 @@ public class LimitedPriorityQueueLinkedImpl<T> implements LimitedPriorityQueue<T
 			rx.append("[");
 			// TODO : MOSTRAR LOS ELEMENTOS DE LA COLA DE PRIORIDAD CON EL MISMO FORMATO QUE LA OTRA IMPLEMENTACIÃ“N
 			while (actual!= null) {
-				if (condicion=true) {
+				if (condicion) {
 					rx.append("( Priority:"+(actual.priority)+" (");
 					condicion= false;
 				}

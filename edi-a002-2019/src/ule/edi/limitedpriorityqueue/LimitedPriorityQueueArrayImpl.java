@@ -15,21 +15,22 @@ public class LimitedPriorityQueueArrayImpl<T> implements LimitedPriorityQueue<T>
 
 
 	public LimitedPriorityQueueArrayImpl(int capacity, int npriorities) {
-
+		colas = new ArrayList<LinkedQueue<T>>();
 		
 		this.capacity= capacity;
 		this.npriorities= npriorities;
-
+		
+		
 		for (int i = 0; i < npriorities; i++) {
 			LinkedQueue<T> queue = new LinkedQueue<T>();
 			colas.add(queue);
 
 		}
-
+		/*
 		if (capacity<=0) {
 			throw new IllegalArgumentException("La capacidad tiene que ser mayor que 0");
 		}
-
+		*/
 	}
 
 

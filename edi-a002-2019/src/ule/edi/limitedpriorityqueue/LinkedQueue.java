@@ -24,10 +24,6 @@ public class LinkedQueue<T> implements QueueADT<T> {
 	{
 
 
-		count = 0;
-		front = null;
-		rear= null;
-
 	} 
 
 	@Override
