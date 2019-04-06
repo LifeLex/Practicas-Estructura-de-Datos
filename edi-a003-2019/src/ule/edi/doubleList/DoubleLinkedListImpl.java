@@ -52,6 +52,9 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	public DoubleLinkedListImpl() {
 		//TODO
 		// Deberá crear el nodo cabecera vacío
+		cab = new DoubleNode<T>(null);
+		cab.next= cab;
+		cab.previous= cab;
 	
 	}
 	
@@ -70,6 +73,14 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	 */
 	public DoubleLinkedListImpl(T ... elements) {
 		//TODO
+		cab = new DoubleNode<T>(null);
+		cab.next = cab;
+		cab.previous=cab;
+		ArrayList<T> listaElementosDados = new ArrayList<T>();
+		for (int i = 0; i < elements.length; i++) {
+			addLast(elements[i]);
+		}
+		
 	
 	}
 	
@@ -81,6 +92,14 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	 */
 	public DoubleLinkedListImpl(DoubleLinkedList<T> other) {
 		//TODO
+		cab = new DoubleNode<T>(null);
+		cab.next = cab;
+		cab.previous=cab;
+		Iterator<T> iteradorAux = other.iterator();
+		while (iteradorAux.hasNext()) {
+			addLast(iteradorAux.next());
+			
+		}
 	}
 	
 
@@ -95,16 +114,25 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		
 		@Override
 		public boolean hasNext() {
-			return false;
-			// TODO Auto-generated method stub
 			
+			// TODO Auto-generated method stub
+			if (at.next==cab) {
+				return false;
+			}else {
+				return true;
+			}
 		}
 
 		@Override
 		public T next() {
-			return null;
-			// TODO Auto-generated method stub
 			
+			// TODO Auto-generated method stub
+			if (hasNext()){
+				at = at.next;
+			}else {
+				throw new NoSuchElementException("The iteration has no more elements");
+			}
+			return at.content;
 		}
 		
 		@Override
@@ -118,19 +146,30 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	private class reverseIterator implements Iterator<T> {
 
 		private DoubleNode<T> at ;
-		
+		//private DoubleNode<T> at = cab;
 		@Override
 		public boolean hasNext() {
-			return false;
+			at= cab;
+			if (at.previous == cab ) {
+				return false;
+			}else {
+				return true;
+			}
+			
 			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public T next() {
-			return null;
-			// TODO Auto-generated method stub
 			
+			// TODO Auto-generated method stub
+			if (hasNext()) {
+				at = at.previous;
+			}else {
+				throw new NoSuchElementException("The iteration has no more elements");
+			}
+			return at.content;
 		}
 		
 		@Override
