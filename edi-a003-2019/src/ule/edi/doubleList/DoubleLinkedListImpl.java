@@ -1,5 +1,6 @@
 package ule.edi.doubleList;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -145,11 +146,11 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	
 	private class reverseIterator implements Iterator<T> {
 
-		private DoubleNode<T> at ;
-		//private DoubleNode<T> at = cab;
+		//private DoubleNode<T> at ;
+		private DoubleNode<T> at = cab;
 		@Override
 		public boolean hasNext() {
-			at= cab;
+			//at= cab;
 			if (at.previous == cab ) {
 				return false;
 			}else {
@@ -180,7 +181,11 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	};
 
 		private class OddAndEvenIterator implements Iterator<T> {
-
+		boolean Odd = false;//impar
+		boolean Even = true;//par
+		boolean first= true;
+		boolean insertFirst= false;
+		private DoubleNode<T> at = cab;
 		// Definir los atributos necesarios para implementar el iterador
 		
 		public OddAndEvenIterator(){
@@ -189,6 +194,25 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 		
 		@Override
 		public boolean hasNext() {
+			if (Even) {
+				if (at.next!=cab && at.next.next!=cab) { //Si la lista tiene mas de dos elementos
+					return true;
+				}else if ((at.next.next==cab && at.next.next.next!= cab)|| (at.next==cab && at.next.next != cab)) {
+					Even= false;
+					Odd=true;
+				}
+			}
+			if (Odd) {
+				if (at.next!=cab && at.next.next!=cab) {
+					return true;
+				}else if (first) {
+					first= false;
+					insertFirst= true;
+					if ((at.next.next==cab && at.next.next.next!= cab)|| (at.next==cab && at.next.next != cab)) {
+						return true;
+					}
+				}
+			}
 			return false;
 			// TODO Auto-generated method stub
 			
@@ -196,6 +220,14 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 		@Override
 		public T next() {
+			if (insertFirst) {
+				insertFirst= false;
+				at= cab;
+				if (at.next!=cab) {
+					at = at.next;
+					return at.content;
+				}
+			}
 			return null;
 			// TODO Auto-generated method stub
 			
@@ -216,6 +248,9 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	
 	@Override
 	public boolean isEmpty() {
+		if (cab.next == cab || cab.previous== cab) {
+			return true;
+		}
 		return false;
 		// TODO Auto-generated method stub
 	
@@ -224,18 +259,63 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public int size() {
+		int size=0;
+		DoubleNode<T> aux =cab;
+		while (aux.next!= cab) {
+			aux= aux.next;
+			size= size+1;
+		}
 		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 	
 	@Override
 	public void addFirst(T element) {
+		DoubleNode<T> nodoInsert = new DoubleNode<T>(element);
+		if (isEmpty()) {//vacio
+			cab.next= nodoInsert;
+			cab.previous= nodoInsert;
+			nodoInsert.next=cab;
+			nodoInsert.previous= cab;
+		} else if (cab.next.next == cab) {//2 elem
+			cab.next= nodoInsert;
+			cab.previous.previous= nodoInsert;
+			nodoInsert.next= cab.previous;
+			nodoInsert.previous= cab;
+			
+		}else if (cab.next.next!= cab) {//+ de 2 elem
+			cab.next.previous= nodoInsert;
+			nodoInsert.previous= cab;
+			nodoInsert.next= cab.next;
+			cab.next= nodoInsert;
+			
+			
+			//nodoInsert.next= cab.next.next;
+		}
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void addLast(T element) {
+		DoubleNode<T> nodoInsert = new DoubleNode<T>(element);
+		if (isEmpty()) {//vacio es igual que para añadir primero ya que no hay elementos
+			cab.next= nodoInsert;
+			cab.previous= nodoInsert;
+			nodoInsert.previous= cab;
+			nodoInsert.next=cab;
+		}else if(cab.next.next==cab) {
+			cab.previous= nodoInsert;
+			nodoInsert.next= cab;
+			nodoInsert.previous= cab.next;
+			cab.next.next= nodoInsert;
+			
+		}else {
+			cab.previous.next= nodoInsert;
+			nodoInsert.previous= cab.previous;
+			nodoInsert.next= cab;
+			cab.previous= nodoInsert;
+		}
 		// TODO Auto-generated method stub
 		
 	}
@@ -243,11 +323,32 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	@Override
 	public void addAtPos(T element, int p) {
 		// TODO Auto-generated method stub
-		
+		DoubleNode<T> nodoInsert = new DoubleNode<T>(element);
+		DoubleNode<T> aux = cab;
+		//Lista Con menos elementos que p
+		if (p>size()) {
+			addLast(element);
+		}else if(p==1){
+			addFirst(element);
+		}else {
+			for (int i = 0; i <=p; i++) {
+				if (i==p) {
+					aux.previous.next= nodoInsert;
+					nodoInsert.previous=  aux.previous;
+					aux.previous= nodoInsert;
+					nodoInsert.next= aux;
+				}else {
+					aux= aux.next;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void addNTimes(T element, int n) {
+		for (int i = 0; i < n; i++) {
+			addLast(element);
+		}
 		// TODO Auto-generated method stub
 		
 	}

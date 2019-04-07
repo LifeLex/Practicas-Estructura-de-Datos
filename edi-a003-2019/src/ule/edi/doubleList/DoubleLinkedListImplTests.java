@@ -22,6 +22,74 @@ public class DoubleLinkedListImplTests {
 	    this.lSABCDE=new DoubleLinkedListImpl<String>("A", "B", "C", "D", "E");
 	}
 	
+	
+	//Mis Test
+	@Test
+	public void testIsEmpty() {
+		Assert.assertEquals(true, lS.isEmpty());
+		lS.addFirst("Hola");
+		Assert.assertEquals(false, lS.isEmpty());
+		//REMOVE
+		
+		
+	}
+	
+	@Test
+	public void testSize() {
+		Assert.assertEquals(0, lS.size());
+		lS.addFirst("Hola");
+		Assert.assertEquals(1, lS.size());
+		
+	}
+	
+	@Test
+	public void testAddFirst() {
+		Assert.assertEquals("[]", lS.toString());
+		lS.addFirst("Hola");
+		Assert.assertEquals("[Hola]", lS.toString());
+		lS.addFirst("Mundo");
+		Assert.assertEquals("[Mundo, Hola]", lS.toString());
+		lS.addFirst("TercerElemento");
+		Assert.assertEquals("[TercerElemento, Mundo, Hola]", lS.toString());
+		lS.addFirst("CuartoElemento");
+		Assert.assertEquals("[CuartoElemento, TercerElemento, Mundo, Hola]", lS.toString());
+	}
+	
+	@Test
+	public void testAddLast() {
+		Assert.assertEquals("[]", lS.toString());
+		lS.addLast("Hola");
+		Assert.assertEquals("[Hola]", lS.toString());
+		lS.addLast("Mundo");
+		Assert.assertEquals("[Hola, Mundo]", lS.toString());
+		lS.addLast("TercerElemento");
+		Assert.assertEquals("[Hola, Mundo, TercerElemento]", lS.toString());
+		lS.addLast("CuartoElemento");
+		Assert.assertEquals("[Hola, Mundo, TercerElemento, CuartoElemento]", lS.toString());
+	}
+	
+	@Test
+	public void testAddAtPos() {
+		Assert.assertEquals("[]", lS.toString());
+		lS.addAtPos("Hola", 6);//Añadir a pos mayor que n
+		Assert.assertEquals("[Hola]", lS.toString());
+		lS.addAtPos("Mundo", 1);//Añadir al principio
+		Assert.assertEquals("[Mundo, Hola]", lS.toString());
+		lS.addAtPos("TercerElemento", 2);//Añadir en medio
+		Assert.assertEquals("[Mundo, TercerElemento, Hola]", lS.toString());
+		
+	}
+	
+	@Test
+	public void testAddNTimes() {
+		Assert.assertEquals("[]", lS.toString());
+		lS.addNTimes("ED", 3);
+		Assert.assertEquals("[ED, ED, ED]", lS.toString());
+	}
+	
+	
+	
+	//Test dados
 	@Test
 	public void testToStringVacio(){
 		Assert.assertEquals(lS.toString(),"[]");		
