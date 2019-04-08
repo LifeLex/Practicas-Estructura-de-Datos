@@ -87,6 +87,68 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals("[ED, ED, ED]", lS.toString());
 	}
 	
+	@Test
+	public void testGetElemen() {
+		lS.addFirst("Hola");
+		Assert.assertEquals("Hola", lS.getElem(1));
+		lS.addLast("Mundo");
+		Assert.assertEquals("Mundo", lS.getElem(2));
+	}
+	@Test(expected= IndexOutOfBoundsException.class)
+	public void testGetElemenException() {
+		lS.getElem(20);
+	}
+	
+	@Test
+	public void testSetElemen() {
+		lS.addFirst("Mundo");
+		lS.addLast("Hola");
+		Assert.assertEquals("[Mundo, Hola]", lS.toString());
+		lS.setElem("Test", 1);
+		lS.setElem("SetElem", 2);
+		Assert.assertEquals("[Test, SetElem]", lS.toString());
+	}
+	@Test(expected= IndexOutOfBoundsException.class)
+	public void testSetElemenException() throws IndexOutOfBoundsException{
+		lS.setElem("TEST", 20);
+	}
+	
+	
+	@Test
+	public void testIndexOf() {
+		lS.addFirst("Mundo");
+		lS.addFirst("Hola");
+		Assert.assertEquals(1, lS.indexOf("Hola"));
+		Assert.assertEquals(2, lS.indexOf("Mundo"));
+	}
+	@Test(expected = NoSuchElementException.class)
+	public void testIndexOfException() throws NoSuchElementException {
+		lS.indexOf("TESTFAIL");
+	}
+	
+	@Test
+	public void testIndexOfElemen() {
+		lS.addFirst("Mundo");
+		lS.addLast("TEST");
+		lS.addFirst("Hola");
+		Assert.assertEquals(1, lS.indexOf("Hola", 1));
+		Assert.assertEquals(3,lS.indexOf("TEST", 3));
+		Assert.assertEquals(2, lS.indexOf("Mundo", 2));
+		
+		
+	}
+	@Test(expected = NoSuchElementException.class)
+	public void testIndexOfElemNoElemException() throws NoSuchElementException {
+		lS.addFirst("Hola");
+		lS.indexOf("TESTFAIL", 1);
+	}
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void testIndexOfElemOutBoundsException() throws IndexOutOfBoundsException {
+		lS.indexOf("TESTFAIL", 20);
+	}
+	
+	
+	
 	
 	
 	//Test dados
