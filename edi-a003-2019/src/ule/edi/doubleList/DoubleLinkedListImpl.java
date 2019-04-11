@@ -427,7 +427,7 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	@Override
 	public T removeFirst(T elem) throws EmptyCollectionException {
 		DoubleNode<T> aux = cab;
-
+		
 		if (isEmpty()) {
 			throw new EmptyCollectionException("");
 		}
@@ -486,6 +486,18 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 
 	@Override
 	public void reverse() {
+		ArrayList<T> lista = new ArrayList<T>();
+		DoubleNode<T> aux = cab;
+		aux= aux.next;
+		while(cab!=aux) {
+			lista.add(aux.content);
+			aux= aux.next;
+		}
+		cab.next= cab;
+		cab.previous= cab;
+		for (int i = 0; i < lista.size(); i++) {
+			addFirst(lista.get(i));
+		}
 		// TODO Auto-generated method stub
 
 	}
@@ -499,7 +511,31 @@ public class DoubleLinkedListImpl<T> implements DoubleLinkedList<T> {
 	@Override
 	public void interlace(DoubleLinkedList<T> other) {
 		// TODO Auto-generated method stub
-
+		DoubleNode<T> aux = cab;
+		aux= cab.next;
+		Iterator<T> iterador = other.iterator();
+		ArrayList<T> lista = new ArrayList<T>();
+		boolean insertar = false;
+		
+		while (!insertar) {
+			if(cab!= aux) {
+				lista.add(aux.content);
+				aux= aux.next;
+			}
+			if (iterador.hasNext()) {
+				lista.add(iterador.next());
+			}
+			if (cab== aux&& !iterador.hasNext()) {
+				insertar = true;
+			}
+			
+		}
+		cab.next= cab;
+		cab.previous= cab;
+		
+		for (int i = lista.size()-1; i>=0; i--) {
+			addFirst(lista.get(i));
+		}
 	}	
 
 	@Override
