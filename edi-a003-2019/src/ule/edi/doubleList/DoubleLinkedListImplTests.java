@@ -7,19 +7,26 @@ import java.util.NoSuchElementException;
 
 import org.junit.*;
 
+import ule.edi.model.Person;
+
 
 public class DoubleLinkedListImplTests {
 
 	private DoubleLinkedListImpl<String> lS;
 	private DoubleLinkedListImpl<String> lSABC;
 	private DoubleLinkedListImpl<String> lSABCDE;
+	private DoubleLinkedListImpl<String> lSVacia;
+	private DoubleLinkedListImpl<Person> listaPersona;
 
 
 	@Before
 	public void setup() {
 		this.lS = new DoubleLinkedListImpl<String>();
+		this.lSVacia = new DoubleLinkedListImpl<String>();
 	    this.lSABC=new DoubleLinkedListImpl<String>("A", "B", "C");
 	    this.lSABCDE=new DoubleLinkedListImpl<String>("A", "B", "C", "D", "E");
+	    this.listaPersona = new DoubleLinkedListImpl<Person>();
+	    
 	}
 	
 	
@@ -29,7 +36,7 @@ public class DoubleLinkedListImplTests {
 		Assert.assertEquals(true, lS.isEmpty());
 		lS.addFirst("Hola");
 		Assert.assertEquals(false, lS.isEmpty());
-		//REMOVE
+		
 		
 		
 	}
@@ -147,10 +154,133 @@ public class DoubleLinkedListImplTests {
 		lS.indexOf("TESTFAIL", 20);
 	}
 	
+	@Test
+	public void testRemoveFirst() throws EmptyCollectionException{
+		lS.addFirst("Hola");
+		Assert.assertEquals("Hola", lS.removeFirst("Hola"));
+		lS.addLast("Mundo");
+		Assert.assertEquals("Mundo", lS.removeFirst("Mundo"));
+	}
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveFirstEmptyException() throws EmptyCollectionException {
+		lS.removeFirst("Vacio");
+	}
+	
+	@Test
+	public void testRemoveLast() throws EmptyCollectionException{
+		lS.addFirst("Hola");
+		lS.addLast("Mundo");
+		Assert.assertEquals("Mundo", lS.removeLast());
+		Assert.assertEquals("Hola", lS.removeLast());
+	}
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveLastEmptyException() throws EmptyCollectionException {
+		lS.removeLast();
+	}
+	
+	@Test
+	public void testRemoveAll() throws EmptyCollectionException{
+		lS.addFirst("Hola");
+		lS.addFirst("Hola");
+		lS.addFirst("Hola");
+		lS.addLast("Mundo");
+		lS.addLast("Mundo");
+		lS.addLast("Mundo");
+		lS.addLast("Mundo");
+		lS.addFirst("Primero");
+		
+		Assert.assertEquals("Mundo", lS.removeAll("Mundo"));
+		Assert.assertEquals("[Primero, Hola, Hola, Hola]", lS.toString());
+		Assert.assertEquals("Hola", lS.removeAll("Hola"));
+		Assert.assertEquals("[Primero]", lS.toString());
+	}
+	@Test(expected = EmptyCollectionException.class)
+	public void testRemoveAllEmptyException() throws EmptyCollectionException {
+		lS.removeLast();
+	}
+	
+	@Test
+	public void testReverse() {
+		lS.addFirst("Hola");
+		lS.addFirst("Hola");
+		lS.addFirst("Hola");
+		lS.addLast("Mundo");
+		lS.addLast("Mundo");
+		lS.addLast("Mundo");
+		lS.addLast("Mundo");
+		lS.addFirst("Primero");
+		lS.reverse();
+		Assert.assertEquals("[Mundo, Mundo, Mundo, Mundo, Hola, Hola, Hola, Primero]", lS.toString());
+		
+	}
+	
+	@Test
+	public void testSubList() {
+		
+		lS.addFirst("Tal");
+		lS.addFirst("Que");
+		lS.addFirst("Mundo");
+		lS.addFirst("Hola");
+		Assert.assertEquals(-1, lS.isSubList(lSABC));
+		Assert.assertEquals(1, lS.isSubList(lSVacia));
+		lSVacia.addFirst("Tal");
+		lSVacia.addFirst("Que");
+		lSVacia.addFirst("Mundo");
+		Assert.assertEquals(2, lS.isSubList(lSVacia));
+	}
+	
+	@Test
+	public void testInterlace() {
+		lSABC.interlace(lSABCDE);
+		Assert.assertEquals("[A, A, B, B, C, C, D, E]", lSABC.toString());
+	}
 	
 	
+	@Test
+	public void testReverseIterator() {
+		Iterator<String> iteratorE = lS.reverseIterator();
+		Assert.assertEquals(false, iteratorE.hasNext());
+		
+		lS.addFirst("Hola");
+		lS.addFirst("Mundo");
+		lS.addFirst("Test");
+		Iterator<String> iteratorF = lS.reverseIterator();
+		Assert.assertEquals(true, iteratorF.hasNext());
+		Assert.assertEquals(true, iteratorF.hasNext());
+		Assert.assertEquals(true, iteratorF.hasNext());
+		Assert.assertEquals("Hola", iteratorF.next());
+		Assert.assertEquals(true, iteratorF.hasNext());
+		Assert.assertEquals("Mundo", iteratorF.next());
+		Assert.assertEquals(true, iteratorF.hasNext());
+		Assert.assertEquals("Test", iteratorF.next());
+		Assert.assertEquals(false, iteratorF.hasNext());
+		Assert.assertEquals(false, iteratorF.hasNext());
+		Assert.assertEquals(false, iteratorF.hasNext());
+		
+	}
+	@Test(expected = NoSuchElementException.class)
+	public void testReverseItException() {
+		Iterator<String> i = lS.reverseIterator();
+		Assert.assertFalse(i.hasNext());
+		i.next();
+	}
 	
 	
+	@Test
+	public void testEquals() {
+		Person persona1 = new Person("Alejandro","71465351G",21);
+		Person persona11 = new Person("Alejandro","71465351G",21);
+		Person persona12 = new Person("Alejandro","71465352G",21);
+		Person persona2 = new Person("Karolina","71465351G",22);
+		Person persona3 = new Person("NoNamer", "1234567A", 99);
+		listaPersona.addFirst(persona1);
+		listaPersona.addLast(persona2);		
+		Assert.assertEquals("[{ NIF: 71465351G  Name : Alejandro, Age:21}, { NIF: 71465351G  Name : Karolina, Age:22}]", listaPersona.toString());
+		Assert.assertTrue(persona1.equals(persona2));
+		Assert.assertFalse(persona1.equals(persona3));
+		Assert.assertTrue(persona11.equals(persona1));
+		Assert.assertFalse(persona11.equals(persona12));
+	}
 	//Test dados
 	@Test
 	public void testToStringVacio(){
@@ -214,5 +344,21 @@ public class DoubleLinkedListImplTests {
 		Iterator<String> i = lS.oddAndEvenIterator();
 		Assert.assertFalse(i.hasNext());
 		i.next();
+	}
+	
+	@Test(expected = UnsupportedOperationException.class)
+	public void testReverseIteratorException() {
+		Iterator<String> i = lS.reverseIterator();
+		i.remove();
+	}
+	@Test(expected = UnsupportedOperationException.class)
+	public void testForewardIteratorException() {
+		Iterator<String> i = lS.iterator();
+		i.remove();
+	}
+	@Test(expected = UnsupportedOperationException.class)
+	public void testOddIteratorExceptionException() {
+		Iterator<String> i = lS.oddAndEvenIterator();
+		i.remove();
 	}
 }
