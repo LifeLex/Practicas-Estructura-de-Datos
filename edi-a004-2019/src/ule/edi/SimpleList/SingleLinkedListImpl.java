@@ -9,16 +9,22 @@ import java.util.NoSuchElementException;
 public class SingleLinkedListImpl<T> extends AbstractSingleLinkedListImpl<T> {
 
 	public SingleLinkedListImpl(T ... elements) {
-		
 		// IMPLEMENTAR DE FORMA RECURSIVA 
+		header=null;
+		
 		
     }
+	private void constructorRec() {
+		
+	}
 		
 	@Override
 	public void addLast(T element) {
 		// TODO Auto-generated method stub
 		
+		
 	}
+	
 
 	@Override
 	public Iterator<T> iterator() {
