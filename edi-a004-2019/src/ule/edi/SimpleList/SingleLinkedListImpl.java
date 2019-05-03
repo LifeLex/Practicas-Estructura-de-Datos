@@ -20,11 +20,23 @@ public class SingleLinkedListImpl<T> extends AbstractSingleLinkedListImpl<T> {
 		
 	@Override
 	public void addLast(T element) {
-		// TODO Auto-generated method stub
+		Node<T> nodoAdd = new Node<T>(element);
+		if (isEmpty()) {
+			header = nodoAdd; //header.equals(nodoAdd);
+		}else {
+			addLastRec(header, nodoAdd);
+		}
 		
 		
 	}
 	
+	private void addLastRec(Node<T> aux, Node<T> nodoAdd) {
+		if (aux.next==null) {
+			aux.next=nodoAdd;
+		}else{
+			addLastRec(aux.next,  nodoAdd);
+		}
+	}
 
 	@Override
 	public Iterator<T> iterator() {
@@ -34,40 +46,101 @@ public class SingleLinkedListImpl<T> extends AbstractSingleLinkedListImpl<T> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		if (header==null) {
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		int size;
+		if (isEmpty()) {
+			size=0;
+		}else{
+			size = sizeRec(header);
+		}
+		return size;
+	}
+	private int sizeRec(Node<T>aux) {
+		if (aux.next.equals(null)) {
+			return 0;
+		}else {
+			return 1 + sizeRec(aux.next);
+		}
+		
 	}
 
 	@Override
 	public void addFirst(T element) {
-		// TODO Auto-generated method stub
+		Node<T>aux = new Node<T>(element);
+		if (header.equals(null)) {
+			header= aux;
+		}else {
+			aux.next= header;
+			header= aux;
+		}
 		
 	}
+	
 
 	
 
 	@Override
 	public void addAtPos(T element, int p) {
-		// TODO Auto-generated method stub
+	
+		if (p==1) {
+			addFirst(element);
+		}else if (p>size()) {
+			addLast(element);
+		}else {
+			addAtPosRec(element, p, 1, header);
+		}
 		
+	}
+	private void addAtPosRec(T element, int p, int n, Node<T>aux) {
+		Node<T> nodoAdd = new Node<T>(element);
+		if (p-1 != n) {
+			n=+1;
+			addAtPosRec(element, p, n, aux.next);
+		} else {
+			nodoAdd.next= aux.next;
+			aux.next= nodoAdd;
+		}
 	}
 
 	@Override
 	public void addNTimes(T element, int n) {
-		// TODO Auto-generated method stub
+		addNTimesRec(element, n);
 		
+	}
+	
+	private void addNTimesRec(T element, int n) {
+		if (n>0) {
+			addLast(element);
+			n=n-1;
+			addNTimesRec(element, n);
+		}
 	}
 
 	@Override
 	public int indexOf(T elem) {
-		// TODO Auto-generated method stub
-		return 0;
+		int index;
+		index = indexOfRec(header, elem);
+		return index;
+	}
+	
+	private int indexOfRec(Node<T>aux, T elem) {
+		if (aux.equals(null)) {
+			throw new NoSuchElementException();
+		}
+		if (aux.content.equals(elem)) {
+			return 1;
+		}else {
+			return 1+indexOfRec(aux.next, elem);
+		}
 	}
 
 	@Override
