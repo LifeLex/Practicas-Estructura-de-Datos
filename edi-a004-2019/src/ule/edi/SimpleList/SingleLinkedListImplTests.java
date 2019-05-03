@@ -2,6 +2,9 @@ package ule.edi.SimpleList;
 
 
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,9 +31,126 @@ public class SingleLinkedListImplTests {
 	   lS=new SingleLinkedListImpl<String>("A", "B", "C", "D");
 	   Assert.assertEquals("[A, B, C, D]", lS.toString());
    }
+	
+	//MIS TEST
+	//ISEMPTY
+	@Test
+	   public void testIsEmpty(){
+		   Assert.assertEquals(true, lS.isEmpty());
+		   Assert.assertEquals(false, lSABC.isEmpty());
+	   }
+	//SIZE
+	 @Test
+	   public void testSize(){
+		   Assert.assertEquals(0, lS.size());
+		   Assert.assertEquals(3, lSABC.size());
+	   }
+	//ADDFIRST
+	 @Test
+	   public void testAddFirst(){
+		   lS.addFirst("1");
+		   Assert.assertEquals("[1]", lS.toString());
+		   lS.addFirst("2");
+		   lS.addFirst("3");
+		   Assert.assertEquals("[3, 2, 1]", lS.toString());
+	   }
+	//ADDLAST
+	 @Test
+	   public void testAddLast(){
+		   lS.addLast("1");
+		   Assert.assertEquals("[1]", lS.toString());
+		   lS.addLast("2");
+		   lS.addLast("3");
+		   Assert.assertEquals("[1, 2, 3]", lS.toString());
+	   }
+	//INDEXOF
+	 @Test
+	   public void testIndexOf(){
+		   Assert.assertEquals(1, lSABC.indexOf("A"));
+		   Assert.assertEquals(2, lSABC.indexOf("B"));
+		   Assert.assertEquals(3, lSABC.indexOf("C"));
+	   }
+	 @Test(expected = NoSuchElementException.class)
+	  	public void testIdexOfException() {
+	  		lS.indexOf("A");
+	  	}
+	//REMOVELAST
+	  @Test
+	   public void testRemoveLast() throws EmptyCollectionException{
+		   Assert.assertEquals("C", lSABC.removeLast());
+		   Assert.assertEquals("[A, B]", lSABC.toString());
+		   Assert.assertEquals("B", lSABC.removeLast());
+		   Assert.assertEquals("[A]", lSABC.toString());
+		   Assert.assertEquals("A", lSABC.removeLast());
+		   Assert.assertEquals("[]", lSABC.toString());
+		   
+	   }
+	   
+	   @Test(expected = EmptyCollectionException.class)
+	 	public void testRemoveLastException() throws EmptyCollectionException {
+	 		lS.removeLast();
+	 	}
+	   
+	   @Test
+	   public void removeLastElemTest() throws EmptyCollectionException {
+		   lSABC.addLast("B");
+		   lSABC.addLast("O");
+		   lSABC.addLast("A");
+		   
+		   lS.addFirst("C");
+		   lS.addFirst("A");
+		   lS.addFirst("B");
+		   
+		   Assert.assertEquals("A", lS.removeLast("A"));
+		   Assert.assertEquals("A", lSABC.removeLast("A"));
+		   Assert.assertEquals("A", lSABC.removeLast("A"));
+	   }
+	   
+	   @Test(expected = EmptyCollectionException.class)
+		public void testRemoveLastEmptyException() throws EmptyCollectionException {
+			lS.removeLast("L");
+		}
+	   
+	   @Test(expected = NoSuchElementException.class)
+		public void testRemoveLastElemenException() throws EmptyCollectionException{
+			lSABC.removeLast("L");
+		}
+	   
+	  
+	//REVERSE
+	   @Test
+	   public void testReverse() throws EmptyCollectionException {
+		   Assert.assertEquals("[C, B, A]", lSABC.reverse().toString());
+		   Assert.assertEquals("[]", lS.reverse().toString());
+	   }
+	//ITERADOR
+	   @Test
+	   public void testForwardIterator() {
+		   Iterator<String> iteratorE = lS.iterator();
+		   
+		   Iterator<String> iteratorF = lSABC.iterator();
+		   
+		  Assert.assertEquals(false, iteratorE.hasNext());
+		  
+		  Assert.assertEquals(true, iteratorF.hasNext());
+		  Assert.assertEquals("B", iteratorF.next());
+		  Assert.assertEquals(true, iteratorF.hasNext());
+		  Assert.assertEquals("C", iteratorF.next());
+		  Assert.assertEquals(false, iteratorF.hasNext());
+	   }
+	   
+	   @Test(expected = NoSuchElementException.class)
+		public void testForewardIteratorException() {
+			Iterator<String> i = lS.iterator();
+			i.next();
+		}
+	  
+	
+	//
+
 
    @Test
-   public void addAtPos(){
+   public void testAddAtPos(){
 	   
 	   lS.addAtPos("A", 1);
 	   Assert.assertEquals("[A]", lS.toString());
@@ -43,7 +163,7 @@ public class SingleLinkedListImplTests {
    }
    
    @Test
-   public void addNTimes(){
+   public void testAddNTimes(){
 	   
 	   lS.addNTimes("A", 3);
 	   Assert.assertEquals("[A, A, A]", lS.toString());
@@ -51,6 +171,8 @@ public class SingleLinkedListImplTests {
 	   Assert.assertEquals("[A, A, A, B, B]", lS.toString());
 	   
    }
+   
+   
 // TEST DE SUBLIST
 	@Test
 	public void tesSubListEnListaVacia() {
