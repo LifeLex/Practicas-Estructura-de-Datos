@@ -48,20 +48,22 @@ public class SingleLinkedListImplTests {
 	//ADDFIRST
 	 @Test
 	   public void testAddFirst(){
-		   lS.addFirst("1");
-		   Assert.assertEquals("[1]", lS.toString());
-		   lS.addFirst("2");
-		   lS.addFirst("3");
-		   Assert.assertEquals("[3, 2, 1]", lS.toString());
+		   lS.addFirst("X");
+		   Assert.assertEquals("[X]", lS.toString());
+		   lS.addFirst("Y");
+		   Assert.assertEquals("[Y, X]", lS.toString());
+		   lS.addFirst("Z");
+		   Assert.assertEquals("[Z, Y, X]", lS.toString());
 	   }
 	//ADDLAST
 	 @Test
 	   public void testAddLast(){
-		   lS.addLast("1");
-		   Assert.assertEquals("[1]", lS.toString());
-		   lS.addLast("2");
-		   lS.addLast("3");
-		   Assert.assertEquals("[1, 2, 3]", lS.toString());
+		   lS.addLast("X");
+		   Assert.assertEquals("[X]", lS.toString());
+		   lS.addLast("Y");
+		   Assert.assertEquals("[X, Y]", lS.toString());
+		   lS.addLast("Z");
+		   Assert.assertEquals("[X, Y, Z]", lS.toString());
 	   }
 	//INDEXOF
 	 @Test
@@ -72,7 +74,7 @@ public class SingleLinkedListImplTests {
 	   }
 	 @Test(expected = NoSuchElementException.class)
 	  	public void testIdexOfException() {
-	  		lS.indexOf("A");
+	  		lS.indexOf("L");
 	  	}
 	//REMOVELAST
 	  @Test
@@ -94,7 +96,7 @@ public class SingleLinkedListImplTests {
 	   @Test
 	   public void removeLastElemTest() throws EmptyCollectionException {
 		   lSABC.addLast("B");
-		   lSABC.addLast("O");
+		   lSABC.addLast("X");
 		   lSABC.addLast("A");
 		   
 		   lS.addFirst("C");
@@ -175,7 +177,7 @@ public class SingleLinkedListImplTests {
    
 // TEST DE SUBLIST
 	@Test
-	public void tesSubListEnListaVacia() {
+	public void testSubListEnListaVacia() {
 	
 		Assert.assertEquals(-1, lS.isSubList(lSABC));		
 	}
