@@ -128,17 +128,15 @@ public class SingleLinkedListImplTests {
 	//ITERADOR
 	   @Test
 	   public void testForwardIterator() {
-		   Iterator<String> iteratorE = lS.iterator();
+		   Iterator<String> iteratorVacio = lS.iterator();
+		   Iterator<String> iteratorABC = lSABC.iterator();
 		   
-		   Iterator<String> iteratorF = lSABC.iterator();
-		   
-		  Assert.assertEquals(false, iteratorE.hasNext());
-		  
-		  Assert.assertEquals(true, iteratorF.hasNext());
-		  Assert.assertEquals("B", iteratorF.next());
-		  Assert.assertEquals(true, iteratorF.hasNext());
-		  Assert.assertEquals("C", iteratorF.next());
-		  Assert.assertEquals(false, iteratorF.hasNext());
+		  Assert.assertEquals(false, iteratorVacio.hasNext());
+		  Assert.assertEquals(true, iteratorABC.hasNext());
+		  Assert.assertEquals("B", iteratorABC.next());
+		  Assert.assertEquals(true, iteratorABC.hasNext());
+		  Assert.assertEquals("C", iteratorABC.next());
+		  Assert.assertEquals(false, iteratorABC.hasNext());
 	   }
 	   
 	   @Test(expected = NoSuchElementException.class)

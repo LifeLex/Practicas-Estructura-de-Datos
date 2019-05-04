@@ -231,7 +231,7 @@ public class SingleLinkedListImpl<T> extends AbstractSingleLinkedListImpl<T> {
 			throw new EmptyCollectionException("");
 		}
 		int pos;
-		pos = removeLastRec2(elem, header, 1, 0);
+		pos = removeLastRec2GetPos(elem, header, 1, 0);
 		return removeLastPosRec(header, pos, 2);
 	}
 
@@ -258,18 +258,18 @@ public class SingleLinkedListImpl<T> extends AbstractSingleLinkedListImpl<T> {
 
 
 
-	private int removeLastRec2(T elem, Node<T> aux, int i, int j) {
+	private int removeLastRec2GetPos(T elem, Node<T> aux, int i, int j) {
 		if(i >= size() && j == 0)
 			throw new NoSuchElementException();
 		if(aux == null)
 			return j;
 		if(aux.content.equals(elem)) {
 			j  = i;
-			return removeLastRec2(elem, aux.next, ++i, j);
+			return removeLastRec2GetPos(elem, aux.next, ++i, j);
 		}
 
 		else
-			return removeLastRec2(elem, aux.next, ++i, j);
+			return removeLastRec2GetPos(elem, aux.next, ++i, j);
 
 	}
 
