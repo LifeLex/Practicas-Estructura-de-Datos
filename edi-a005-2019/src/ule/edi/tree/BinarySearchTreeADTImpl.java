@@ -111,6 +111,14 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends
 	public void insert(Collection<T> elements) {
 		//	O todos o ninguno; si alguno es 'null', ni siquiera se comienza a insertar
 		//TODO Implementar el método
+		for (T i : elements) {
+			if (i == null) {
+				throw new IllegalArgumentException("Elemento nulo encontrado en la coleccion");
+			}
+		}
+		for (T j : elements) {
+			insert(j);
+		}
 		
 	}
 
@@ -124,6 +132,15 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends
 	public void insert(T ... elements) {
 		//	O todos o ninguno; si alguno es 'null', ni siquiera se comienza a insertar
 	    // TODO Implementar el método
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i] == null) {
+				throw new IllegalArgumentException("Elemento nulo encontrado en el array");
+			}
+		}
+
+		for (int i = 0; i < elements.length; i++) {
+			insert(elements[i]);
+		}
 		
 	}
 	
@@ -140,7 +157,16 @@ public class BinarySearchTreeADTImpl<T extends Comparable<? super T>> extends
 		if (element == null) {
 			throw new IllegalArgumentException("No se aceptan elementos nulos");
 		}
-		//	TODO Implementar el método
+
+		if (this.content == null) {
+			this.setContent(element);
+			this.setLeftBST(emptyBST());
+			this.setRightBST(emptyBST());
+		} else if (this.content.compareTo(element) > 0) {
+			this.getLeftBST().insert(element);
+		} else if (this.content.compareTo(element) < 0) {
+			this.getRightBST().insert(element);
+		}
 	}
 	
 	
