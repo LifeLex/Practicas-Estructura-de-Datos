@@ -75,7 +75,10 @@ public class World extends AbstractBinaryTreeADT<LinkedList<Entity>> {
 	private World() {
 		
 		//	Crea un mundo vacío
-		// TODO
+		
+		leftSubtree=null;
+		rightSubtree=null;
+		content=null;
 	}
 	
 	public static World createEmptyWorld() {
