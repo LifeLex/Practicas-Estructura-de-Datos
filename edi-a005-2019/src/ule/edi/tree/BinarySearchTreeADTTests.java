@@ -232,6 +232,34 @@ public class BinarySearchTreeADTTests {
 			TE.tagWidth();;
 		}
 		
+		@Test
+		public void isPathTrueFalse() {
+			List<Integer> listaverdadero= new LinkedList<Integer>();
+			listaverdadero.add(50);
+			listaverdadero.add(20);
+			listaverdadero.add(30);
+			Assert.assertEquals(true, TC3.isPathIn(listaverdadero));
+			Assert.assertEquals("{50 [(path, 1)], {20 [(path, 2)], {10, ∅, ∅}, {30 [(path, 3)], ∅, ∅}}, {80, {70, ∅, ∅}, {90, ∅, ∅}}}", TC3.toString());
+//			List<Integer> listafalso= new LinkedList<Integer>();
+//			listafalso.add(50);
+//			listafalso.add(20);
+//			listafalso.add(20);
+//			Assert.assertEquals(false, TC3.isPathIn(listafalso));
+//			Assert.assertEquals("{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, {70, ∅, ∅}, {90, ∅, ∅}}}", TC3.toString());
+
+			
+		}
+		
+		@Test
+		public void isPathFalseTest() {
+			List<Integer> listafalso= new LinkedList<Integer>();
+			listafalso.add(50);
+			listafalso.add(20);
+			listafalso.add(20);
+			Assert.assertEquals(false, TC3.isPathIn(listafalso));
+			Assert.assertEquals("{50, {20, {10, ∅, ∅}, {30, ∅, ∅}}, {80, {70, ∅, ∅}, {90, ∅, ∅}}}", TC3.toString());
+		}
+		
 	}
 
 

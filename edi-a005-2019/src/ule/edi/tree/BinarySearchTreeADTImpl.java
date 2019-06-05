@@ -177,15 +177,15 @@ AbstractBinaryTreeADT<T> {
 	 */
 	public void withdraw(Collection<T> elements) {
 		//		O todos o ninguno; si alguno es 'null', no se eliminará ningún elemento
-		for (T i : elements) {
-			if (i == null) {
-				throw new IllegalArgumentException("");
-			}
-		}
-
-		for (T t : elements) {
-			withdraw(t);
-		}
+//		for (T i : elements) {
+//			if (i == null) {
+//				throw new IllegalArgumentException("");
+//			}
+//		}
+//
+//		for (T t : elements) {
+//			withdraw(t);
+//		}
 	}
 
 	/**
@@ -193,15 +193,15 @@ AbstractBinaryTreeADT<T> {
 	 */
 	public void withdraw(T ... elements) {
 		//		O todos o ninguno; si alguno es 'null', no se eliminará ningún elemento
-		for (int i = 0; i < elements.length; i++) {
-			if (elements[i] == null) {
-				throw new IllegalArgumentException("Elemento nulo encontrado en el array");
-			}
-		}
-
-		for (int i = 0; i < elements.length; i++) {
-			withdraw(elements[i]);
-		}
+//		for (int i = 0; i < elements.length; i++) {
+//			if (elements[i] == null) {
+//				throw new IllegalArgumentException("Elemento nulo encontrado en el array");
+//			}
+//		}
+//
+//		for (int i = 0; i < elements.length; i++) {
+//			withdraw(elements[i]);
+//		}
 	}
 
 	/**
@@ -210,125 +210,9 @@ AbstractBinaryTreeADT<T> {
 	 * @throws NoSuchElementException si el elemento a eliminar no está en el árbol           
 	 */
 	public void withdraw(T element) {
-//		// 	Si el elemento tiene dos hijos, se tomará el criterio de sustituir el elemento por el mayor de sus menores y eliminar el mayor de los menores.
-//		//BORRAR RAIZ
-//		if (content.equals(element)) {
-//			if (isLeaf()) {
-//				setContent(null);
-//				setLeftBST(null);
-//				setRightBST(null);
-//			}else if (!isLeaf()) {
-//				Collection<T> listaT = new ArrayList<T>();
-//				T elemento = content;
-//				int n=0;
-//				listaT = raizCollection(listaT, elemento, n);
-//				setContent(null);
-//				setLeftBST(null);
-//				setRightBST(null);
-//				insert(listaT);
-//			}
-//		}
-//		//BORRAR RAMA IZQ
-//		if (this.getLeftBST().content!= null && this.getLeftBST().content.equals(element)) {
-//			if (getLeftBST().isLeaf()) {
-//				getLeftBST().setContent(null);
-//				getLeftBST().setLeftBST(null);
-//				getLeftBST().setRightBST(null);
-//			}else if (!isLeaf()) {
-//				Collection<T> listaT = new ArrayList<T>();
-//				T elemento = content;
-//				int n=0;
-//				listaT = izquierdaCollection(listaT, elemento, n);
-//				getLeftBST().setContent(null);
-//				getLeftBST().setLeftBST(null);
-//				getLeftBST().setRightBST(null);
-//				insert(listaT);
-//			}
-//		}
-//		//BORRAR RAMA DERECHA
-//		if (this.getRightBST().content!= null && this.getRightBST().content.equals(element)) {
-//			if (getRightBST().isLeaf()) {
-//				getRightBST().setContent(null);
-//				getRightBST().setLeftBST(null);
-//				getRightBST().setRightBST(null);
-//			}else if (!isLeaf()) {
-//				Collection<T> listaT = new ArrayList<T>();
-//				T elemento = content;
-//				int n=0;
-//				listaT = izquierdaCollection(listaT, elemento, n);
-//				getRightBST().setContent(null);
-//				getRightBST().setLeftBST(null);
-//				getRightBST().setRightBST(null);
-//				insert(listaT);
-//			}
-//		}
-//
-//
-//		if (this.content.compareTo(element)>0) {
-//			this.getLeftBST().withdraw(element);
-//		}
-//		if (this.content.compareTo(element)<0) {
-//			this.getRightBST().withdraw(element);
-//		}
-//
-//
-//
+
 	}
-//	private Collection<T> raizCollection(Collection<T> listaT, T elemento, int n){
-//		if (content!= null) {
-//			if (content.compareTo(elemento)<0) {
-//				n= n+1;
-//				if (n>1) {
-//					listaT.add(content);
-//				}
-//			}
-//		}
-//		if (getLeftBST() !=null) {
-//			getLeftBST().raizCollection(listaT, elemento, n);
-//		}
-//		if (getRightBST() != null) {
-//			getRightBST().raizCollection(listaT, elemento, n);
-//		}
-//		return listaT;
-//
-//
-//	}
-//	private Collection<T> izquierdaCollection(Collection<T> listaT, T elemento, int n){
-//		if (content!= null) {
-//			if (content.compareTo(elemento)<0) {
-//				n= n+1;
-//				if (n>1) {
-//					listaT.add(content);
-//				}
-//			}
-//		}
-//		if (getLeftBST() !=null) {
-//			getLeftBST().izquierdaCollection(listaT, elemento, n);
-//		}
-//		if (getRightBST() != null) {
-//			getRightBST().izquierdaCollection(listaT, elemento, n);
-//		}
-//		return listaT;
-//
-//	}
-//	private Collection<T> derechaCollection(Collection<T> listaT, T elemento, int n){
-//		if (content!= null) {
-//			if (content.compareTo(elemento)>0) {
-//				n= n+1;
-//				if (n>1) {
-//					listaT.add(content);
-//				}
-//			}
-//		}
-//		if (getLeftBST() !=null) {
-//			getLeftBST().derechaCollection(listaT, elemento, n);
-//		}
-//		if (getRightBST() != null) {
-//			getRightBST().derechaCollection(listaT, elemento, n);
-//		}
-//		return listaT;
-//
-//	}
+
 	/**
 	 * Devuelve el sub-árbol indicado. (para tests)
 	 * path será el camino para obtener el sub-arbol. Está formado por 0 y 1.
@@ -494,26 +378,49 @@ AbstractBinaryTreeADT<T> {
  * @return  true si los elementos de la lista coinciden con algún camino desde la raiz,  falso si no es así
  */
 public boolean isPathIn(List<T> path) {
-	
-	if (path.size()==0) {
+	int pos[]= {0};
+	int posTag[]= {0};
+	int resultado[]= {0};
+	isPathInRec(pos,resultado,path);
+	if (resultado[0]==1) {
+		this.isPathInTag(posTag, resultado, path);
 		return true;
 	}else {
-			isPathInRec(path);
+		return false;
 	}
-
-	isPathTag(path);
-	return false;
 }
 
-
-private void isPathTag(List<T> path) {
-	// TODO Auto-generated method stub
+private void isPathInRec(int[] pos,int [] resultado,List<T> path) {
 	
+	if(this.content==path.get(pos[0])) {
+		if(path.size()-1==pos[0]) {
+			resultado[0]++;
+		}else {
+			pos[0]++;
+			if(this.content.compareTo(path.get(pos[0]))>0) {
+				this.getLeftBST().isPathInRec(pos,resultado, path);
+			}else if(this.content.compareTo(path.get(pos[0]))<0) {
+				this.getRightBST().isPathInRec(pos,resultado, path);
+			}
+		}
+	}
 }
-
-private void isPathInRec(List<T> path) {
-	// TODO Auto-generated method stub
+private void isPathInTag(int[] pos,int [] resultado,List<T> path) {
 	
+
+	int aux=pos[0];
+	this.setTag("path", aux+1);
+	if(path.size()-1==pos[0]) {
+		this.setTag("path", aux+1);
+	}else {
+		pos[0]++;
+		aux++;
+		if(this.content.compareTo(path.get(pos[0]))>0) {
+			this.getLeftBST().isPathInTag(pos,resultado, path);
+		}else if(this.content.compareTo(path.get(pos[0]))<0) {
+			this.getRightBST().isPathInTag(pos,resultado, path);
+		}	
+	}
 }
 
 /**
